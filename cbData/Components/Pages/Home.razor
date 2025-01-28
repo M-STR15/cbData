@@ -2,6 +2,42 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@inject NavigationManager NavigationManager
 
-Welcome to your new app.
+<style>
+    .btn {
+        width: 300px;
+    }
+
+
+    .center-container {
+        display: flex;
+        flex-direction: column; /* Tlačítka pod sebe */
+        justify-content: center; /* Vertikální zarovnání */
+        align-items: center; /* Horizontální zarovnání */
+        height: 100vh; /* Výška celé stránky */
+        margin: 0;
+    }
+
+        /* Mezery mezi tlačítky */
+        .center-container .btn {
+            margin: 10px 0;
+        }
+</style>
+
+<div class="center-container">
+    <h1>Rozcestník</h1>
+    <button class="btn" @onclick="onOpenDocumentPageClick">Dokumentace(Swagger)</button>
+    <button class="btn" @onclick="onOpenJsonDataPageClick">JSON data aktualizované 20s</button>
+</div>
+@code {
+    private void onOpenDocumentPageClick()
+    {
+        NavigationManager.NavigateTo("/swagger/index.html", true);
+    }
+
+    private void onOpenJsonDataPageClick()
+    {
+
+    }
+}
