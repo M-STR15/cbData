@@ -1,0 +1,14 @@
+﻿add-migration
+add-migration InitialMigration -Project cbData.BE.DB -startupproject cbData -OutputDir Migrations
+Add-Migration InitialMigration -Project cbData.BE.DB -StartupProject cbData
+
+dotnet ef migrations add InitialCreate
+dotnet ef migrations add InitialMigration --project cbData.BE.DB --startup-project cbData
+dotnet ef migrations add InitialMigration --project cbData.BE.DB --startup-project cbData --output-dir Migrations
+
+dotnet ef migrations add InitialMigration --project ./cbData.BE.DB/cbData.BE.DB.csproj --startup-project ./cbData.BE.DB/cbData.BE.DB.csproj
+
+remove-migration
+
+update-database
+Update-Database -StartupProject dbData.BE.DB -Project dbData.BE.DB
