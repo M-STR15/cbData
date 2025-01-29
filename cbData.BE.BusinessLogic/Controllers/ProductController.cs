@@ -20,14 +20,13 @@ namespace cbData.BE.BusinessLogic.Controllers
 
 		#region GET
 		[HttpGet("api/v1.0/Procuts/GET/Orders/All")]
-		[AllowAnonymous]
 		public IActionResult GetOrders()
 		{
 			try
 			{
 				var orders = _productDbService.GetOrders();
 				var model = orders?.Select(x => new OrderApi(x));
-				return model == null ? NotFound() : Ok(model);
+				return Ok(model);
 			}
 			catch (Exception ex)
 			{

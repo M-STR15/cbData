@@ -18,14 +18,15 @@ var connectionString = builder.Configuration.GetConnectionString("cbDataDb-local
 var connectionString = builder.Configuration.GetConnectionString("cbDataDb");
 #endif
 
-builder.Services.AddDbContextFactory<CbDataDbContext>(options => options.UseSqlServer(connectionString)
-			.EnableSensitiveDataLogging()
-			.LogTo(Console.WriteLine), ServiceLifetime.Singleton);
+builder.Services.AddDbContextFactory<CbDataDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
 
 builder.Services.AddScoped<ProductDbService>();
 
 builder.Services.AddScoped<ProductController>();
+
+builder.Services.AddControllers();
+	//.AddApplicationPart(typeof(ProductController).Assembly);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -45,6 +46,8 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+app.UseRouting();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -53,12 +56,11 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
-
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
 	c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
-	c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+	c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
 });
 
 app.UseStaticFiles();
@@ -68,5 +70,7 @@ app.UseHttpsRedirection();
 
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode();
+
+app.MapControllers();
 
 app.Run();
