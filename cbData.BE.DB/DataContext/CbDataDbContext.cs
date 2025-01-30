@@ -28,6 +28,38 @@ namespace cbData.BE.DB.DataContext
 			base.OnModelCreating(modelBuilder);
 			modelBuilder.HasDefaultSchema("dbo");
 
+			#region DEBUG
+			insertTestData(modelBuilder);
+			#endregion
+		}
+
+
+		private void insertTestData(ModelBuilder modelBuilder)
+		{
+			var countProducts = 100;
+			var countOrders = 200;
+			insertTestData_Products(modelBuilder, countProducts);
+			insertTestData_Orders(modelBuilder, countProducts, countOrders);
+		}
+
+		private void insertTestData_Products(ModelBuilder modelBuilder, int countProducts)
+		{
+			for (int i = 1; i < countProducts; i++)
+			{
+				var quantityRandom = new Random().Next(0, countProducts);
+				var productName = $"Product {i}";
+				modelBuilder.Entity<Product>().HasData(new Product(i, productName));
+			}
+		}
+
+		private void insertTestData_Orders(ModelBuilder modelBuilder, int countProducts, int countOrders)
+		{
+			for (int i = 1; i < countOrders; i++)
+			{
+				var quantityRandom = new Random().Next(0, countOrders);
+				var productIdRandom = new Random().Next(1, countProducts);
+				modelBuilder.Entity<Order>().HasData(new Order(i, productIdRandom, quantityRandom));
+			}
 		}
 	}
 }

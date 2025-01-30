@@ -1,15 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cbData.BE.DB.Models.Products
 {
-	[Table("Orders", Schema = "Products")]
-	public class OrderApi
+	public class OrderApi : IOrder
 	{
-		[Key]
-		public int ProductId { get; set; }
-		public int Quantity { get; set; }
-
 		public OrderApi()
 		{ }
 
@@ -18,5 +12,14 @@ namespace cbData.BE.DB.Models.Products
 			ProductId = order.ProductId;
 			Quantity = order.Quantity;
 		}
+
+		public int Id { get; set; }
+
+		public Product? Product { get; set; }
+
+		[Key]
+		public int ProductId { get; set; }
+		public int Quantity { get; set; }
+		public DateTime UpdateUtcDateTime { get; set; }
 	}
 }
