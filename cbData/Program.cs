@@ -2,6 +2,8 @@ using cbData.BE.BusinessLogic.Controllers;
 using cbData.BE.DB.DataContext;
 using cbData.BE.DB.Services;
 using cbData.Components;
+using cbData.Services;
+using cbData.Stories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -25,8 +27,12 @@ builder.Services.AddScoped<ProductDbService>();
 
 builder.Services.AddScoped<ProductController>();
 
+builder.Services.AddSingleton<ProductStory>();
+
 builder.Services.AddControllers();
-	//.AddApplicationPart(typeof(ProductController).Assembly);
+//.AddApplicationPart(typeof(ProductController).Assembly);
+
+builder.Services.AddHostedService<TimedHostedService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
