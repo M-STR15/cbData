@@ -6,15 +6,6 @@ namespace cbData.BE.DB.Models.Products
 	[Table("Orders", Schema = "Products")]
 	public class Order : Stamp, IOrder
 	{
-		[Key]
-		public int Id { get; set; }
-		[Required]
-		public int ProductId { get; set; }
-		[Required]
-		public int Quantity { get; set; }
-		[ForeignKey(nameof(ProductId))]
-		public Product? Product { get; set; }
-
 		public Order()
 		{
 			UpdateUtcDateTime = DateTime.UtcNow;
@@ -30,5 +21,15 @@ namespace cbData.BE.DB.Models.Products
 		{
 			Id = id;
 		}
+
+		[Key]
+		public int Id { get; set; }
+		[ForeignKey(nameof(ProductId))]
+		public Product? Product { get; set; }
+
+		[Required]
+		public int ProductId { get; set; }
+		[Required]
+		public int Quantity { get; set; }
 	}
 }
