@@ -1,10 +1,9 @@
-﻿using cbData.BE.DB.Models.Products;
-using cbData.Models;
+﻿using cbData.Models;
 
 namespace cbData.Stories
 {
 	public class ProductStory
 	{
-		public OrdersBuffer OrdersBuffer { get; set; }
+		public OrdersBuffer? OrdersBuffer { get; set; } = new();
 	}
 }

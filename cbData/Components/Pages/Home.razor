@@ -28,7 +28,7 @@
 <div class="center-container">
     <h1>Rozcestník</h1>
     <button class="btn" @onclick="onOpenDocumentPageClick">Dokumentace(Swagger)</button>
-    <button class="btn" @onclick="onOpenJsonDataPageClick">Buffer data-Orders (aktualizované 20s)</button>
+    <button class="btn" @onclick="onOpenBufferDataPageClick">Buffer data-Orders (aktualizované 20s)</button>
     <button class="btn" @onclick="onOpenJsonDataPageClick">JSON data-Orders (aktualizované 20s)</button>
 </div>
 @code {
@@ -39,6 +39,11 @@
 
     private void onOpenJsonDataPageClick()
     {
+        NavigationManager.NavigateTo("/json-data", true);
+    }
 
+    private void onOpenBufferDataPageClick()
+    {
+        NavigationManager.NavigateTo("/buffer-data", true);
     }
 }
