@@ -21,5 +21,10 @@ namespace cbData.BE.DB.Models.Products
 		public int ProductId { get; set; }
 		public int Quantity { get; set; }
 		public DateTime UpdateUtcDateTime { get; set; }
+
+		public Order ToOrder()
+		{
+			return new Order(ProductId, Quantity);
+		}
 	}
 }
