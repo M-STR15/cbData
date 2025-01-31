@@ -14,14 +14,14 @@ namespace cbData.BE.DB.Services
 			_contextFactory = contextFactory;
 		}
 
-		public List<Order>? GetOrders()
+		public async Task<List<Order>?> GetOrdersAsync()
 		{
 			try
 			{
-				using (var db = _contextFactory.CreateDbContext())
+				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
-					var list = db.Orders.ToList();
+					var list = await db.Orders.ToListAsync();
 					return list;
 				}
 
@@ -33,14 +33,14 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public Order? GetOrder(int orderId)
+		public async Task<Order?> GetOrderAsync(int orderId)
 		{
 			try
 			{
-				using (var db = _contextFactory.CreateDbContext())
+				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
-					var order = db.Orders.FirstOrDefault(x => x.Id == orderId);
+					var order = await db.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
 					return order;
 				}
 
@@ -52,15 +52,15 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public Order? AddOrder(Order order)
+		public async Task<Order?> AddOrderAsync(Order order)
 		{
 			try
 			{
-				using (var db = _contextFactory.CreateDbContext())
+				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
-					db.Add(order);
-					db.SaveChanges();
+					await db.AddAsync(order);
+					await db.SaveChangesAsync();
 
 					return order;
 				}
@@ -71,15 +71,15 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public Order? UpdateOrder(Order order)
+		public async Task<Order?> UpdateOrder(Order order)
 		{
 			try
 			{
-				using (var db = _contextFactory.CreateDbContext())
+				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
 					db.Update(order);
-					db.SaveChanges();
+					await db.SaveChangesAsync();
 
 					return order;
 				}
@@ -90,17 +90,17 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public bool DeleteOrder(int orderId)
+		public async Task<bool> DeleteOrderAsync(int orderId)
 		{
 			try
 			{
-				using (var db = _contextFactory.CreateDbContext())
+				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					var order = db.Orders.FirstOrDefault(x => x.Id == orderId);
 					if (order != null)
 					{
 						db.Remove(order);
-						db.SaveChanges();
+						await db.SaveChangesAsync();
 					}
 
 					return true;
@@ -112,13 +112,13 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public bool ExistOrder(int orderId)
+		public async Task<bool> ExistOrderAsync(int orderId)
 		{
 			try
 			{
-				using (var db = _contextFactory.CreateDbContext())
+				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
-					return db.Orders.Any(x => x.Id == orderId);
+					return await db.Orders.AnyAsync(x => x.Id == orderId);
 				}
 			}
 			catch (Exception)

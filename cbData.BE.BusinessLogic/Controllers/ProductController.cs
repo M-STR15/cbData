@@ -16,14 +16,38 @@ namespace cbData.BE.BusinessLogic.Controllers
 		{
 			_productDbService = productDbService;
 		}
-
 		#region GET
-		[HttpGet("api/v1/products/orders")]
-		public IActionResult GetOrders()
+		/// <summary>
+		/// Získá objednávku podle ID
+		/// </summary>
+		/// <param name="orderId">ID objednávky</param>
+		/// <returns>HTTP odpověď</returns>
+		[HttpGet("api/v1/products/orders/{orderId}")]
+		public async Task<IActionResult> GetOrderAsync(int orderId)
 		{
 			try
 			{
-				var orders = _productDbService.GetOrders();
+				var orders = await _productDbService.GetOrderAsync(orderId);
+				return Ok(orders);
+			}
+			catch (Exception ex)
+
+			{
+				//Debug.WriteLine(ex.ToString());
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// Získá všechny objednávky
+		/// </summary>
+		/// <returns>HTTP odpověď</returns>
+		[HttpGet("api/v1/products/orders")]
+		public async Task<IActionResult> GetOrdersAsync()
+		{
+			try
+			{
+				var orders = await _productDbService.GetOrdersAsync();
 				var model = orders?.Select(x => new OrderApi(x));
 				return Ok(model);
 			}
@@ -33,29 +57,19 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
-		[HttpGet("api/v1/products/orders/{orderId}")]
-		public IActionResult GetOrder(int orderId)
-		{
-			try
-			{
-				var orders = _productDbService.GetOrder(orderId);
-				return Ok(orders);
-			}
-			catch (Exception ex)
-			{
-				//Debug.WriteLine(ex.ToString());
-				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-			}
-		}
 		#endregion GET
-
 		#region POST
+		/// <summary>
+		/// Přidá novou objednávku
+		/// </summary>
+		/// <param name="orderApi">Objednávka k přidání</param>
+		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders")]
-		public IActionResult AddOrder([FromBody] OrderApi orderApi)
+		public async Task<IActionResult> AddOrderAsync([FromBody] OrderApi orderApi)
 		{
 			try
 			{
-				var order = _productDbService.AddOrder(orderApi.ToOrder());
+				var order = await _productDbService.AddOrderAsync(orderApi.ToOrder());
 				return CreatedAtAction("", order);
 			}
 			catch (Exception ex)
@@ -64,14 +78,18 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 		}
 		#endregion POST
-
 		#region PUT
+		/// <summary>
+		/// Aktualizuje objednávku
+		/// </summary>
+		/// <param name="orderApi">Objednávka k aktualizaci</param>
+		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/orders")]
-		public IActionResult UpdateOrder([FromBody] OrderApi orderApi)
+		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderApi orderApi)
 		{
 			try
 			{
-				var orders = _productDbService.UpdateOrder(orderApi.ToOrder());
+				var orders = await _productDbService.UpdateOrder(orderApi.ToOrder());
 				return CreatedAtAction("", orders);
 			}
 			catch (Exception ex)
@@ -80,14 +98,18 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 		}
 		#endregion PUT
-
 		#region DELETE
+		/// <summary>
+		/// Smaže objednávku podle ID
+		/// </summary>
+		/// <param name="orderId">ID objednávky</param>
+		/// <returns>HTTP odpověď</returns>
 		[HttpDelete("api/v1/products/orders/{orderId}")]
-		public IActionResult DeleteOrder(int orderId)
+		public async Task<IActionResult> DeleteOrderAsync(int orderId)
 		{
 			try
 			{
-				var orders = _productDbService.DeleteOrder(orderId);
+				var orders = await _productDbService.DeleteOrderAsync(orderId);
 				return NoContent();
 			}
 			catch (Exception ex)

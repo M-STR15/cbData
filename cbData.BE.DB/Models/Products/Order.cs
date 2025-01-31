@@ -17,9 +17,14 @@ namespace cbData.BE.DB.Models.Products
 			Quantity = quantity;
 		}
 
-		public Order(int id, int productId, int quantity) : this(productId, quantity)
+		public Order(int id, int productId, int quantity, DateTime? updateDateTime = null) : this(productId, quantity)
 		{
 			Id = id;
+
+			if (updateDateTime != null)
+			{
+				UpdateUtcDateTime = (DateTime)updateDateTime;
+			}
 		}
 
 		[Key]

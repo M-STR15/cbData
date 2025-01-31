@@ -58,7 +58,7 @@ namespace cbData.BE.DB.DataContext
 			{
 				var quantityRandom = new Random().Next(0, countOrders);
 				var productIdRandom = new Random().Next(1, countProducts);
-				modelBuilder.Entity<Order>().HasData(new Order(i, productIdRandom, quantityRandom));
+				modelBuilder.Entity<Order>().HasData(new Order(i, productIdRandom, quantityRandom, DateTime.UtcNow));
 			}
 		}
 	}

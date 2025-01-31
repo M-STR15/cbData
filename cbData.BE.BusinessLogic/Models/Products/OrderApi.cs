@@ -9,8 +9,10 @@ namespace cbData.BE.DB.Models.Products
 
 		public OrderApi(Order order)
 		{
+			Id = order.Id;
 			ProductId = order.ProductId;
 			Quantity = order.Quantity;
+			UpdateUtcDateTime = order.UpdateUtcDateTime;
 		}
 
 		public int Id { get; set; }
