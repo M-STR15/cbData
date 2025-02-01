@@ -14,22 +14,129 @@ namespace cbData.BE.DB.Services
 			_contextFactory = contextFactory;
 		}
 
-		public async Task<List<Order>?> GetOrdersAsync()
+		public async Task<Order?> AddOrderAsync(Order order)
+		{
+			try
+			{
+				if (_contextFactory != null)
+				{
+					using (var db = await _contextFactory.CreateDbContextAsync())
+					{
+						db.ChangeTracker.Clear();
+						await db.AddAsync(order);
+						await db.SaveChangesAsync();
+
+						return order;
+					}
+				}
+				else
+				{
+					return null;
+				}
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
+		public async Task<Product?> AddProductAsync(Product product)
+		{
+			try
+			{
+				if (_contextFactory != null)
+				{
+					using (var db = await _contextFactory.CreateDbContextAsync())
+					{
+						db.ChangeTracker.Clear();
+						await db.AddAsync(product);
+						await db.SaveChangesAsync();
+
+						return product;
+					}
+				}
+				else
+				{
+					return null;
+				}
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
+		public async Task<bool> DeleteOrderAsync(int orderId)
+		{
+			try
+			{
+				if (_contextFactory != null)
+				{
+					using (var db = await _contextFactory.CreateDbContextAsync())
+					{
+						var entity = await db.Set<Order>().FindAsync(orderId);
+						if (entity != null)
+						{
+							db.Remove(entity);
+							await db.SaveChangesAsync();
+						}
+
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		public async Task<bool> DeleteProductAsync(int orderId)
+		{
+			try
+			{
+				if (_contextFactory != null)
+				{
+
+					using (var db = await _contextFactory.CreateDbContextAsync())
+					{
+						var entity = await db.Set<Product>().FindAsync(orderId);
+						if (entity != null)
+						{
+							db.Remove(entity);
+							await db.SaveChangesAsync();
+						}
+
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		public async Task<bool> ExistOrderAsync(int orderId)
 		{
 			try
 			{
 				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
-					db.ChangeTracker.Clear();
-					var list = await db.Orders.Include(x => x.Product).ToListAsync();
-					return list;
+					return await db.Orders.AnyAsync(x => x.Id == orderId);
 				}
-
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				Debug.Write(ex.ToString());
-				return null;
+				return false;
 			}
 		}
 
@@ -52,36 +159,80 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public async Task<Order?> AddOrderAsync(Order order)
+		public async Task<List<Order>?> GetOrdersAsync()
 		{
 			try
 			{
 				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
-					await db.AddAsync(order);
-					await db.SaveChangesAsync();
-
-					return order;
+					var list = await db.Orders.Include(x => x.Product).ToListAsync();
+					return list;
 				}
+
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				Debug.Write(ex.ToString());
 				return null;
 			}
 		}
 
+		public async Task<Product?> GetProductAsync(int productId)
+		{
+			try
+			{
+				using (var db = await _contextFactory.CreateDbContextAsync())
+				{
+					db.ChangeTracker.Clear();
+					var product = await db.Products.Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id == productId);
+					return product;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				Debug.Write(ex.ToString());
+				return null;
+			}
+		}
+
+		public async Task<List<Product>?> GetProductsAsync()
+		{
+			try
+			{
+				using (var db = await _contextFactory.CreateDbContextAsync())
+				{
+					db.ChangeTracker.Clear();
+					var list = await db.Products.Include(x => x.Orders).ToListAsync();
+					return list;
+				}
+
+			}
+			catch (Exception ex)
+			{
+				Debug.Write(ex.ToString());
+				return null;
+			}
+		}
 		public async Task<Order?> UpdateOrder(Order order)
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
+				if (_contextFactory != null)
 				{
-					db.ChangeTracker.Clear();
-					db.Update(order);
-					await db.SaveChangesAsync();
+					using (var db = await _contextFactory.CreateDbContextAsync())
+					{
+						db.ChangeTracker.Clear();
+						db.Update(order);
+						await db.SaveChangesAsync();
 
-					return order;
+						return order;
+					}
+				}
+				else
+				{
+					return null;
 				}
 			}
 			catch (Exception)
@@ -90,40 +241,29 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
-		public async Task<bool> DeleteOrderAsync(int orderId)
+		public async Task<Product?> UpdateProduct(Product product)
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
+				if (_contextFactory != null)
 				{
-					var order = db.Orders.FirstOrDefault(x => x.Id == orderId);
-					if (order != null)
+					using (var db = await _contextFactory.CreateDbContextAsync())
 					{
-						db.Remove(order);
+						db.ChangeTracker.Clear();
+						db.Update(product);
 						await db.SaveChangesAsync();
+
+						return product;
 					}
-
-					return true;
 				}
-			}
-			catch (Exception)
-			{
-				return false;
-			}
-		}
-
-		public async Task<bool> ExistOrderAsync(int orderId)
-		{
-			try
-			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
+				else
 				{
-					return await db.Orders.AnyAsync(x => x.Id == orderId);
+					return null;
 				}
 			}
 			catch (Exception)
 			{
-				return false;
+				return null;
 			}
 		}
 	}

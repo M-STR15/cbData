@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using cbData.BE.BusinessLogic.Models.Products;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace cbData.BE.DB.Models.Products
 {
-	public class OrderApi : IOrder
+	public class OrderApi : IOrderApiBase
 	{
 		public OrderApi()
 		{ }
@@ -13,21 +15,32 @@ namespace cbData.BE.DB.Models.Products
 			ProductId = order.ProductId;
 			Quantity = order.Quantity;
 			UpdateUtcDateTime = order.UpdateUtcDateTime;
-			Product = order.Product;
+			Product = convertProduct(order.Product);
 		}
 
 		public int Id { get; set; }
 
-		public Product? Product { get; set; }
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+		public ProductApi? Product { get; set; }
 
 		[Key]
 		public int ProductId { get; set; }
+
 		public int Quantity { get; set; }
+
 		public DateTime UpdateUtcDateTime { get; set; }
 
 		public Order ToOrder()
 		{
 			return new Order(ProductId, Quantity);
+		}
+
+		private ProductApi? convertProduct(Product? product)
+		{
+			if (product != null)
+				return new ProductApi(product?.Id ?? 0, product?.Name ?? "", product?.Description, null);
+			else
+				return null;
 		}
 	}
 }
