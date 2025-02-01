@@ -1,4 +1,5 @@
 ﻿using cbData.Shared.Models;
+using cbData.Shared.Stories;
 using Serilog;
 using Serilog.Events;
 using System.Text.Json;
@@ -10,9 +11,11 @@ namespace cbData.Shared.Services
 		private readonly string _version;
 		private readonly string _assemblyName;
 		private readonly string _path;
-		public EventLogService()
+		private readonly PathsStory _pathStory;
+		public EventLogService(PathsStory pathsStory)
 		{
-			_path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+			_pathStory = pathsStory;
+			_path = Path.Combine(_pathStory.BaseDirectory, "logs");
 			_assemblyName = "cbData";
 
 			var path = $"{_path}\\{_assemblyName}.log";

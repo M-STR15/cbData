@@ -1,7 +1,7 @@
 ﻿using cbData.BE.DB.Models.Products;
 using cbData.Shared.Services;
+using cbData.Shared.Stories;
 using cbData.Stories;
-using Newtonsoft.Json;
 
 namespace cbData.Services
 {
@@ -11,11 +11,13 @@ namespace cbData.Services
 		private ProductStory? _productStory;
 		private readonly HttpClient _httpClient;
 		private readonly IEventLogService _eventLogService;
-		public TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService)
+		private readonly CJsonService _cJsonService;
+		public TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService, CJsonService cJsonService)
 		{
 			_productStory = productStory;
 			_httpClient = httpClientFactory.CreateClient("ApiClient");
 			_eventLogService = eventLogService;
+			_cJsonService = cJsonService;
 		}
 
 		public Task StartAsync(CancellationToken cancellationToken)
@@ -30,7 +32,7 @@ namespace cbData.Services
 			try
 			{
 				await refreshBufferData();
-				await saveJsonData();
+				await _cJsonService.SaveBufferDataToJsonAsync();
 			}
 			catch (Exception ex)
 			{
@@ -59,33 +61,6 @@ namespace cbData.Services
 			catch (Exception ex)
 			{
 				_eventLogService.WriteError(Guid.Parse("38eeba7d-e0f4-4fc2-a698-07db6b2f0569"), ex.Message);
-			}
-		}
-
-		private async Task saveJsonData()
-		{
-			try
-			{
-				if (_productStory?.OrdersBuffer?.Orders != null)
-				{
-					var assemblyName = "bufferData.json";
-					var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bufferData");
-					var fullPath = Path.Combine(path, assemblyName);
-					var data = _productStory.OrdersBuffer.Orders;
-					var jsonString = JsonConvert.SerializeObject(data);
-
-					if (jsonString != null)
-					{
-						if (!Directory.Exists(path))
-							Directory.CreateDirectory(path);
-						
-						await File.WriteAllTextAsync(fullPath, jsonString);
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				_eventLogService.WriteError(Guid.Parse("4dcd36dc-b947-4fba-b6e2-ddfeb4650df1"), ex.Message);
 			}
 		}
 

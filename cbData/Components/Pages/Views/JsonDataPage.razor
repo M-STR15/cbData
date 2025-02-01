@@ -1,7 +1,25 @@
 ﻿@page "/json-data"
+@using cbData.Services
+@using cbData.Shared.Stories
+@using cbData.Stories
 
 <h3>JSON data</h3>
 
-@code {
-
+@if(@jsonText!=null)
+{
+    <P>@jsonText</p>
 }
+
+@code {
+    [Inject]
+    private CJsonService _cJsonService { get; set; }
+    private string? jsonText;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(_cJsonService!=null)
+            jsonText = await _cJsonService.ReadBufferDataAsync();
+
+        await base.OnInitializedAsync();
+    } 
+ }
