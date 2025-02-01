@@ -1,12 +1,13 @@
 ﻿using cbData.BE.DB.Models.Products;
 using cbData.Shared.Services;
 using cbData.Stories;
+using Newtonsoft.Json;
 
 namespace cbData.Services
 {
 	public class TimedHostedService : IHostedService, IDisposable
 	{
-		private Timer? _timer;
+		private Timer? _refreshBufferTimer;
 		private ProductStory? _productStory;
 		private readonly HttpClient _httpClient;
 		private readonly IEventLogService _eventLogService;
@@ -19,12 +20,24 @@ namespace cbData.Services
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			_timer = new Timer(doWork, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(20));
+			_refreshBufferTimer = new Timer(doWork, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(20));
 			_eventLogService.WriteInformation(Guid.Parse("1f7650c4-65a8-4738-b8a2-13e5140f5cc1"), "Nastartování timeru pro ukládání hodnot do bufferu.");
 			return Task.CompletedTask;
 		}
 
 		private async void doWork(object state)
+		{
+			try
+			{
+				await refreshBufferData();
+				await saveJsonData();
+			}
+			catch (Exception ex)
+			{
+				_eventLogService.WriteError(Guid.Parse("37fdf305-03b4-46dd-961e-2af6e7c9b013"), ex.Message);
+			}
+		}
+		private async Task refreshBufferData()
 		{
 			try
 			{
@@ -45,19 +58,46 @@ namespace cbData.Services
 			}
 			catch (Exception ex)
 			{
-				_eventLogService.WriteError(Guid.Parse("37fdf305-03b4-46dd-961e-2af6e7c9b013"), ex.Message);
+				_eventLogService.WriteError(Guid.Parse("38eeba7d-e0f4-4fc2-a698-07db6b2f0569"), ex.Message);
+			}
+		}
+
+		private async Task saveJsonData()
+		{
+			try
+			{
+				if (_productStory?.OrdersBuffer?.Orders != null)
+				{
+					var assemblyName = "bufferData.json";
+					var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bufferData");
+					var fullPath = Path.Combine(path, assemblyName);
+					var data = _productStory.OrdersBuffer.Orders;
+					var jsonString = JsonConvert.SerializeObject(data);
+
+					if (jsonString != null)
+					{
+						if (!Directory.Exists(path))
+							Directory.CreateDirectory(path);
+						
+						await File.WriteAllTextAsync(fullPath, jsonString);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				_eventLogService.WriteError(Guid.Parse("4dcd36dc-b947-4fba-b6e2-ddfeb4650df1"), ex.Message);
 			}
 		}
 
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
-			_timer?.Change(Timeout.Infinite, 0);
+			_refreshBufferTimer?.Change(Timeout.Infinite, 0);
 			return Task.CompletedTask;
 		}
 
 		public void Dispose()
 		{
-			_timer?.Dispose();
+			_refreshBufferTimer?.Dispose();
 		}
 	}
 }
