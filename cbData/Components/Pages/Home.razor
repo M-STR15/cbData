@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using cbData.Shared.Models
 
 <PageTitle>Home</PageTitle>
 
@@ -30,20 +31,13 @@
     <button class="btn" @onclick="onOpenDocumentPageClick">Dokumentace(Swagger)</button>
     <button class="btn" @onclick="onOpenBufferDataPageClick">Buffer data-Orders (aktualizované 20s)</button>
     <button class="btn" @onclick="onOpenJsonDataPageClick">JSON data-Orders (aktualizované 20s)</button>
+    <button class="btn" @onclick="onOpenJsonDataPageClick">EventLogs</button>
+    <P>@BuildInfo.VersionStr</P>
 </div>
 @code {
-    private void onOpenDocumentPageClick()
-    {
-        NavigationManager.NavigateTo("/swagger/index.html", true);
-    }
+    private void onOpenDocumentPageClick() => NavigationManager.NavigateTo("/swagger/index.html", true);
 
-    private void onOpenJsonDataPageClick()
-    {
-        NavigationManager.NavigateTo("/json-data", true);
-    }
+    private void onOpenJsonDataPageClick() => NavigationManager.NavigateTo("/json-data", true);
 
-    private void onOpenBufferDataPageClick()
-    {
-        NavigationManager.NavigateTo("/buffer-data", true);
-    }
+    private void onOpenBufferDataPageClick() => NavigationManager.NavigateTo("/buffer-data", true);
 }

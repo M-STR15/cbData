@@ -3,6 +3,7 @@ using cbData.BE.DB.DataContext;
 using cbData.BE.DB.Services;
 using cbData.Components;
 using cbData.Services;
+using cbData.Shared.Services;
 using cbData.Stories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -32,9 +33,8 @@ builder.Services.AddHttpClient("ApiClient", (sp, client) =>
 
 builder.Services.AddDbContextFactory<CbDataDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
-
+builder.Services.AddSingleton<IEventLogService, EventLogService>();
 builder.Services.AddScoped<ProductDbService>();
-
 builder.Services.AddScoped<ProductController>();
 
 builder.Services.AddSingleton<ProductStory>();

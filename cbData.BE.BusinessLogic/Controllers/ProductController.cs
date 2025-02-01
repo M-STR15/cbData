@@ -1,6 +1,7 @@
 ﻿using cbData.BE.BusinessLogic.Models.Products;
 using cbData.BE.DB.Models.Products;
 using cbData.BE.DB.Services;
+using cbData.Shared.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 	public class ProductController : ControllerBase
 	{
 		private ProductDbService _productDbService;
-		public ProductController(ProductDbService productDbService)
+		private IEventLogService _eventLogService;
+		public ProductController(ProductDbService productDbService, IEventLogService eventLogService)
 		{
 			_productDbService = productDbService;
+			_eventLogService = eventLogService;
 		}
 		#region GET
 		/// <summary>
@@ -38,8 +41,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 				}
 			}
 			catch (Exception ex)
-
 			{
+				_eventLogService.WriteError(Guid.Parse("88512c81-4994-46c6-95c7-a3accbcafe20"), ex.Message);
 				//Debug.WriteLine(ex.ToString());
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
@@ -60,7 +63,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
-				//Debug.WriteLine(ex.ToString());
+				_eventLogService.WriteError(Guid.Parse("533c3ac6-2298-4133-81fe-9d1ffe1f0626"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -88,6 +91,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("25206d29-7f6b-4b13-8753-cfd56b3f36b2"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -146,6 +150,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("1004f45c-0861-4dc0-8083-757fe0207019"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -165,6 +170,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("6ba72af9-b92c-4781-a9e7-d6d2c2879e12"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -185,6 +191,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("7fa30049-160d-4cbb-89c6-5b8cce92c1c4"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -204,6 +211,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("5469acc6-1de1-4f84-9ca4-2833c2d5b1fa"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -224,6 +232,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("04d698d3-220f-44b9-b3fc-1b8365fa6972"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
@@ -243,6 +252,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
+				_eventLogService.WriteError(Guid.Parse("dcbcfea4-3f96-4068-bf1f-ec7a824d1741"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cbData.BE.DB", "cbData.BE.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cbData.BE.BusinessLogic", "cbData.BE.BusinessLogic\cbData.BE.BusinessLogic.csproj", "{5276362A-3D15-4B6D-B36B-86C40FC755AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cbData.Shared", "cbData.Shared\cbData.Shared.csproj", "{7EA2150D-3ABD-4007-BBF3-ADAD20DC2C2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5276362A-3D15-4B6D-B36B-86C40FC755AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5276362A-3D15-4B6D-B36B-86C40FC755AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5276362A-3D15-4B6D-B36B-86C40FC755AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA2150D-3ABD-4007-BBF3-ADAD20DC2C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA2150D-3ABD-4007-BBF3-ADAD20DC2C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA2150D-3ABD-4007-BBF3-ADAD20DC2C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA2150D-3ABD-4007-BBF3-ADAD20DC2C2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
