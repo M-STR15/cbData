@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\cbData.BE.BusinessLogic\cbData.BE.BusinessLogic.csproj" />
-		<ProjectReference Include="..\cbData.BE.DB\cbData.BE.DB.csproj" />
 		<ProjectReference Include="..\cbData.Shared\cbData.Shared.csproj" />
 	</ItemGroup>
 
