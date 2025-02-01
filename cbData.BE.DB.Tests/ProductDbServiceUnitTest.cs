@@ -45,6 +45,8 @@ namespace cbData.BE.DB.Tests.Services
 
 			var result = await _service.AddProductAsync(product);
 			var test = await _service.GetProductAsync(product.Id);
+			test = await _service.GetProductAsync(product.Id);
+			test = await _service.GetProductAsync(product.Id);
 
 			Assert.NotNull(result);
 			Assert.Equal(product.Id, result.Id);

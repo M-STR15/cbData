@@ -5,8 +5,9 @@ using System.Diagnostics;
 
 namespace cbData.BE.DB.Services
 {
-	public class ProductDbService
+	public class ProductDbService : IDisposable
 	{
+
 		private readonly IDbContextFactory<CbDataDbContext> _contextFactory;
 
 		public ProductDbService(IDbContextFactory<CbDataDbContext> contextFactory)
@@ -20,14 +21,12 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-					using (var db = await _contextFactory.CreateDbContextAsync())
-					{
-						db.ChangeTracker.Clear();
-						await db.AddAsync(order);
-						await db.SaveChangesAsync();
+					var db = await _contextFactory.CreateDbContextAsync();
+					db.ChangeTracker.Clear();
+					await db.AddAsync(order);
+					await db.SaveChangesAsync();
 
-						return order;
-					}
+					return order;
 				}
 				else
 				{
@@ -47,14 +46,13 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-					using (var db = await _contextFactory.CreateDbContextAsync())
-					{
-						db.ChangeTracker.Clear();
-						await db.AddAsync(product);
-						await db.SaveChangesAsync();
+					var db = await _contextFactory.CreateDbContextAsync();
+					db.ChangeTracker.Clear();
+					await db.AddAsync(product);
+					await db.SaveChangesAsync();
 
-						return product;
-					}
+					return product;
+
 				}
 				else
 				{
@@ -74,17 +72,15 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-					using (var db = await _contextFactory.CreateDbContextAsync())
+					var db = await _contextFactory.CreateDbContextAsync();
+					var entity = await db.Set<Order>().FindAsync(orderId);
+					if (entity != null)
 					{
-						var entity = await db.Set<Order>().FindAsync(orderId);
-						if (entity != null)
-						{
-							db.Remove(entity);
-							await db.SaveChangesAsync();
-						}
-
-						return true;
+						db.Remove(entity);
+						await db.SaveChangesAsync();
 					}
+
+					return true;
 				}
 				else
 				{
@@ -103,18 +99,15 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-
-					using (var db = await _contextFactory.CreateDbContextAsync())
+					var db = await _contextFactory.CreateDbContextAsync();
+					var entity = await db.Set<Product>().FindAsync(orderId);
+					if (entity != null)
 					{
-						var entity = await db.Set<Product>().FindAsync(orderId);
-						if (entity != null)
-						{
-							db.Remove(entity);
-							await db.SaveChangesAsync();
-						}
-
-						return true;
+						db.Remove(entity);
+						await db.SaveChangesAsync();
 					}
+
+					return true;
 				}
 				else
 				{
@@ -127,14 +120,17 @@ namespace cbData.BE.DB.Services
 			}
 		}
 
+		public void Dispose()
+		{
+
+		}
+
 		public async Task<bool> ExistOrderAsync(int orderId)
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
-				{
-					return await db.Orders.AnyAsync(x => x.Id == orderId);
-				}
+				var db = await _contextFactory.CreateDbContextAsync();
+				return await db.Orders.AnyAsync(x => x.Id == orderId);
 			}
 			catch (Exception)
 			{
@@ -146,13 +142,10 @@ namespace cbData.BE.DB.Services
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
-				{
-					db.ChangeTracker.Clear();
-					var order = await db.Orders.Include(x => x.Product).FirstOrDefaultAsync(x => x.Id == orderId);
-					return order;
-				}
-
+				var db = await _contextFactory.CreateDbContextAsync();
+				db.ChangeTracker.Clear();
+				var order = await db.Orders.Include(x => x.Product).FirstOrDefaultAsync(x => x.Id == orderId);
+				return order;
 			}
 			catch (Exception ex)
 			{
@@ -165,13 +158,10 @@ namespace cbData.BE.DB.Services
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
-				{
-					db.ChangeTracker.Clear();
-					var list = await db.Orders.Include(x => x.Product).ToListAsync();
-					return list;
-				}
-
+				var db = await _contextFactory.CreateDbContextAsync();
+				db.ChangeTracker.Clear();
+				var list = await db.Orders.Include(x => x.Product).ToListAsync();
+				return list;
 			}
 			catch (Exception ex)
 			{
@@ -184,13 +174,10 @@ namespace cbData.BE.DB.Services
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
-				{
-					db.ChangeTracker.Clear();
-					var product = await db.Products.Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id == productId);
-					return product;
-				}
-
+				var db = await _contextFactory.CreateDbContextAsync();
+				db.ChangeTracker.Clear();
+				var product = await db.Products.Include(x => x.Orders).FirstOrDefaultAsync(x => x.Id == productId);
+				return product;
 			}
 			catch (Exception ex)
 			{
@@ -203,13 +190,10 @@ namespace cbData.BE.DB.Services
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
-				{
-					db.ChangeTracker.Clear();
-					var list = await db.Products.Include(x => x.Orders).ToListAsync();
-					return list;
-				}
-
+				var db = await _contextFactory.CreateDbContextAsync();
+				db.ChangeTracker.Clear();
+				var list = await db.Products.Include(x => x.Orders).ToListAsync();
+				return list;
 			}
 			catch (Exception ex)
 			{
@@ -223,14 +207,12 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-					using (var db = await _contextFactory.CreateDbContextAsync())
-					{
-						db.ChangeTracker.Clear();
-						db.Update(order);
-						await db.SaveChangesAsync();
+					var db = await _contextFactory.CreateDbContextAsync();
+					db.ChangeTracker.Clear();
+					db.Update(order);
+					await db.SaveChangesAsync();
 
-						return order;
-					}
+					return order;
 				}
 				else
 				{
@@ -249,14 +231,12 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-					using (var db = await _contextFactory.CreateDbContextAsync())
-					{
-						db.ChangeTracker.Clear();
-						db.Update(product);
-						await db.SaveChangesAsync();
+					var db = await _contextFactory.CreateDbContextAsync();
+					db.ChangeTracker.Clear();
+					db.Update(product);
+					await db.SaveChangesAsync();
 
-						return product;
-					}
+					return product;
 				}
 				else
 				{
