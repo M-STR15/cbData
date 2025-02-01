@@ -11,6 +11,6 @@ namespace cbData.Models
 		/// <summary>
 		/// Hodnoty uložné v paměti od poslední aktualizace.
 		/// </summary>
-		public List<Order> Orders { get; set; } = new();
+		public List<OrderApi>? Orders { get; set; } = new();
 	}
 }

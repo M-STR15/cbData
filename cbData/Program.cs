@@ -20,21 +20,15 @@ var connectionString = builder.Configuration.GetConnectionString("cbDataDb-local
 var connectionString = builder.Configuration.GetConnectionString("cbDataDb");
 #endif
 
-builder.Services.AddHttpClient();
-
-builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-//builder.Services.AddSingleton<HttpClient>(sp =>
-//{
-//	var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
-//	var request = httpContextAccessor.HttpContext?.Request;
+builder.Services.AddHttpClient("ApiClient", (sp, client) =>
+{
+	var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+	var request = httpContextAccessor.HttpContext?.Request;
 
-//	var baseAddress = $"{request?.Scheme}://{request?.Host.Value}/";
-//	return new HttpClient { BaseAddress = new Uri(baseAddress) };
-//});
-
-builder.Services.AddScoped<CbDataHttpClientService>();
+	var baseAddress = request != null ? $"{request.Scheme}://{request.Host.Value}" : "https://localhost:7246/";
+	client.BaseAddress = new Uri(baseAddress);
+});
 
 builder.Services.AddDbContextFactory<CbDataDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 

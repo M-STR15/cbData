@@ -1,4 +1,5 @@
 ﻿@page "/buffer-data"
+@using cbData.BE.DB.Models.Products
 @using cbData.Stories
 
 @inject ProductStory ProductStory;
@@ -6,11 +7,33 @@
 <h3>Buffer data</h3>
 
 <h1>UTC Datum a čas poslední aktualizace:@ProductStory?.OrdersBuffer?.LastUpdate.ToString()</h1>
+<table>
+    <thead>
+        <tr>
+            <th>@nameof(Order.ProductId)</th>
+            <th>@nameof(Order.Quantity)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (_orders != null)
+        {
+            @foreach (var item in _orders)
+            {
+                <tr data-widget="expandable-table" aria-expanded="false">
+                    <td>@item.ProductId</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 
 @code {
+    private List<OrderApi>? _orders =>ProductStory?.OrdersBuffer?.Orders;
+
     protected override Task OnInitializedAsync()
     {
-
+        var test = ProductStory;
         return base.OnInitializedAsync();
     }
 }

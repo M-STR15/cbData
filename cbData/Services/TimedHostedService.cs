@@ -1,26 +1,22 @@
 ﻿using cbData.BE.DB.Models.Products;
 using cbData.Stories;
+using System.Net.Http;
 
 namespace cbData.Services
 {
 	public class TimedHostedService : IHostedService, IDisposable
 	{
-		private Timer _timer;
-		private readonly ILogger<TimedHostedService> _logger;
-
-		private ProductStory _productStory { get; set; }
-		private CbDataHttpClientService _clientService { get; set; }
-		public TimedHostedService(ILogger<TimedHostedService> logger, CbDataHttpClientService clientService, ProductStory productStory)
+		private Timer? _timer;
+		private ProductStory? _productStory;
+		private readonly HttpClient _httpClient;
+		public TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory)
 		{
-			_logger = logger;
-			_clientService = clientService;
 			_productStory = productStory;
+			_httpClient = httpClientFactory.CreateClient("ApiClient");
 		}
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
-			_logger.LogInformation("Timed Hosted Service is starting.");
-			// Spustí timer, který se spustí po 5 sekundách a následně každých 20 sekund
 			_timer = new Timer(doWork, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(20));
 
 			return Task.CompletedTask;
@@ -28,24 +24,25 @@ namespace cbData.Services
 
 		private async void doWork(object state)
 		{
-			_logger.LogInformation("Timer triggered at: {time}", DateTimeOffset.Now);
-			if (_clientService != null)
+			if (_httpClient != null)
 			{
-				var orders = await _clientService.GetAsync<List<Order?>>("/api/v1/products/orders");
-				if (orders != null && _productStory != null)
+				var result = await _httpClient.GetAsync("/api/v1/products/orders");
+
+				if (result.IsSuccessStatusCode)
 				{
-					_productStory.OrdersBuffer.LastUpdate = DateTime.UtcNow;
-					_productStory.OrdersBuffer.Orders = orders;
+					var resultData = await result.Content.ReadFromJsonAsync<List<OrderApi>>();
+					if (_productStory != null && resultData != null)
+					{
+							_productStory.OrdersBuffer.LastUpdate = DateTime.UtcNow;
+						_productStory.OrdersBuffer.Orders = resultData;
+					}
 				}
+
 			}
-			// Tady můžeš spustit svůj kód, který chceš vykonávat periodicky
 		}
 
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
-			_logger.LogInformation("Timed Hosted Service is stopping.");
-
-			// Zastaví timer, pokud aplikace běží
 			_timer?.Change(Timeout.Infinite, 0);
 			return Task.CompletedTask;
 		}

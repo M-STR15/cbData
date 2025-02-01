@@ -13,6 +13,7 @@ namespace cbData.BE.DB.Models.Products
 			ProductId = order.ProductId;
 			Quantity = order.Quantity;
 			UpdateUtcDateTime = order.UpdateUtcDateTime;
+			Product = order.Product;
 		}
 
 		public int Id { get; set; }

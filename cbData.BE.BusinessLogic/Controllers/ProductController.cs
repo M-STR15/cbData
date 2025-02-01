@@ -27,8 +27,16 @@ namespace cbData.BE.BusinessLogic.Controllers
 		{
 			try
 			{
-				var orders = await _productDbService.GetOrderAsync(orderId);
-				return Ok(orders);
+				var order = await _productDbService.GetOrderAsync(orderId);
+				if (order != null)
+				{
+					var orderConvert = firstLevelOrdert(order);
+					return Ok(orderConvert);
+				}
+				else
+				{
+					return NotFound();
+				}
 			}
 			catch (Exception ex)
 
@@ -36,6 +44,23 @@ namespace cbData.BE.BusinessLogic.Controllers
 				//Debug.WriteLine(ex.ToString());
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
+		}
+
+		private OrderApi firstLevelOrdert(Order order)
+		{
+			return new OrderApi()
+			{
+				Id = order.Id,
+				ProductId = order.ProductId,
+				Quantity = order.Quantity,
+				UpdateUtcDateTime = order.UpdateUtcDateTime,
+				Product = new Product
+				{
+					Id = order.Product.Id,
+					Name = order.Product.Name,
+					Description = order.Product.Description
+				},
+			};
 		}
 
 		/// <summary>
@@ -48,7 +73,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			try
 			{
 				var orders = await _productDbService.GetOrdersAsync();
-				var model = orders?.Select(x => new OrderApi(x));
+				var model = orders?.Select(x => firstLevelOrdert(x)).ToList();
 				return Ok(model);
 			}
 			catch (Exception ex)

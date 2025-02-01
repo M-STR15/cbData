@@ -21,7 +21,7 @@ namespace cbData.BE.DB.Services
 				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
-					var list = await db.Orders.ToListAsync();
+					var list = await db.Orders.Include(x => x.Product).ToListAsync();
 					return list;
 				}
 
@@ -40,7 +40,7 @@ namespace cbData.BE.DB.Services
 				using (var db = await _contextFactory.CreateDbContextAsync())
 				{
 					db.ChangeTracker.Clear();
-					var order = await db.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+					var order = await db.Orders.Include(x => x.Product).FirstOrDefaultAsync(x => x.Id == orderId);
 					return order;
 				}
 
