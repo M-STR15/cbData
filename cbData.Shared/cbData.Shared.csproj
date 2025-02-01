@@ -1,15 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GenerateBuildInfoScript>$(MSBuildProjectDirectory)\Scripts\BuildDateGenerateClass.ps1</GenerateBuildInfoScript>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Serilog" Version="4.2.0" />
-    <PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
-  </ItemGroup>
+	<Target Name="RunPowerShellScript" BeforeTargets="BeforeBuild">
+		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GenerateBuildInfoScript)&quot;" />
+	</Target>
+
+	<ItemGroup>
+		<PackageReference Include="Serilog" Version="4.2.0" />
+		<PackageReference Include="Serilog.Sinks.EventLog" Version="4.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+	</ItemGroup>
 
 </Project>
