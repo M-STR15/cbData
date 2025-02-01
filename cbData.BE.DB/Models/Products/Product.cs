@@ -11,7 +11,7 @@ namespace cbData.BE.DB.Models.Products
 		public Product()
 		{ }
 
-		public Product(int id, string name, string? description = "")
+		public Product(int id, string name, string? description = null)
 		{
 			Id = id;
 			Name = name;

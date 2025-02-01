@@ -1,4 +1,5 @@
-﻿using cbData.BE.DB.Models.Products;
+﻿using cbData.BE.BusinessLogic.Models.Reports;
+using cbData.BE.DB.Models.Products;
 using cbData.Shared.Services;
 using cbData.Shared.Stories;
 using cbData.Stories;
@@ -45,15 +46,15 @@ namespace cbData.Services
 			{
 				if (_httpClient != null)
 				{
-					var result = await _httpClient.GetAsync("/api/v1/products/orders");
+					var result = await _httpClient.GetAsync("/api/v1/reports/total-order-by-product");
 
 					if (result.IsSuccessStatusCode)
 					{
-						var resultData = await result.Content.ReadFromJsonAsync<List<OrderApi>>();
+						var resultData = await result.Content.ReadFromJsonAsync<List<TotalOrdersByProductApi>>();
 						if (_productStory != null && resultData != null && _productStory.OrdersBuffer != null)
 						{
 							_productStory.OrdersBuffer.LastUpdate = DateTime.UtcNow;
-							_productStory.OrdersBuffer.Orders = resultData;
+							_productStory.OrdersBuffer.TotalOrdersByProduct = resultData;
 						}
 					}
 				}

@@ -1,4 +1,5 @@
-﻿using cbData.BE.DB.Models.Products;
+﻿using cbData.BE.BusinessLogic.Models.Reports;
+using cbData.BE.DB.Models.Products;
 
 namespace cbData.Models
 {
@@ -11,6 +12,6 @@ namespace cbData.Models
 		/// <summary>
 		/// Hodnoty uložné v paměti od poslední aktualizace.
 		/// </summary>
-		public List<OrderApi>? Orders { get; set; } = new();
+		public List<TotalOrdersByProductApi>? TotalOrdersByProduct { get; set; } = new();
 	}
 }

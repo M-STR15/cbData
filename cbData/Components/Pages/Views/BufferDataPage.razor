@@ -1,27 +1,28 @@
 ﻿@page "/buffer-data"
+@using cbData.BE.BusinessLogic.Models.Reports
 @using cbData.BE.DB.Models.Products
 @using cbData.Stories
 
 @inject ProductStory ProductStory;
 
-<h3>Buffer data</h3>
+<h1>Buffer data</h1>
 
-<h1>UTC Datum a čas poslední aktualizace:@ProductStory?.OrdersBuffer?.LastUpdate.ToString()</h1>
+<h2>UTC Datum a čas poslední aktualizace:@ProductStory?.OrdersBuffer?.LastUpdate.ToString()</h2>
 <table>
     <thead>
         <tr>
-            <th>@nameof(Order.ProductId)</th>
-            <th>@nameof(Order.Quantity)</th>
+            <th style="width:200px;text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.Product)</th>
+            <th style="text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.TotalOrders)</th>
         </tr>
     </thead>
     <tbody>
-        @if (_orders != null)
+        @if (_totalOrdersByProduct != null)
         {
-            @foreach (var item in _orders)
+            @foreach (var item in _totalOrdersByProduct)
             {
                 <tr data-widget="expandable-table" aria-expanded="false">
-                    <td>@item.ProductId</td>
-                    <td>@item.Quantity</td>
+                    <td style="width:200px;text-align:left;">@item.Product?.Name</td>
+                    <td>@item.TotalOrders</td>
                 </tr>
             }
         }
@@ -29,7 +30,7 @@
 </table>
 
 @code {
-    private List<OrderApi>? _orders =>ProductStory?.OrdersBuffer?.Orders;
+    private List<TotalOrdersByProductApi>? _totalOrdersByProduct => ProductStory?.OrdersBuffer?.TotalOrdersByProduct;
 
     protected override Task OnInitializedAsync()
     {

@@ -20,12 +20,15 @@ namespace cbData.Services
 		{
 			try
 			{
-				if (_productStory?.OrdersBuffer?.Orders != null)
+				if (_productStory?.OrdersBuffer?.TotalOrdersByProduct != null)
 				{
 					var path = Path.Combine(_pathsStory.BaseDirectory, _pathsStory.FileDirectory);
 					var fullPath = Path.Combine(path, _pathsStory.JsonBufferName);
-					var data = _productStory.OrdersBuffer.Orders;
-					var jsonString = JsonConvert.SerializeObject(data);
+					var data = _productStory.OrdersBuffer.TotalOrdersByProduct;
+					var jsonString = JsonConvert.SerializeObject(data, new JsonSerializerSettings
+					{
+						NullValueHandling = NullValueHandling.Ignore
+					});
 
 					if (jsonString != null)
 					{
@@ -46,11 +49,11 @@ namespace cbData.Services
 		{
 			try
 			{
-				if (_productStory?.OrdersBuffer?.Orders != null)
+				if (_productStory?.OrdersBuffer?.TotalOrdersByProduct != null)
 				{
 					var path = Path.Combine(_pathsStory.BaseDirectory, _pathsStory.FileDirectory);
 					var fullPath = Path.Combine(path, _pathsStory.JsonBufferName);
-					var data = _productStory.OrdersBuffer.Orders;
+					var data = _productStory.OrdersBuffer.TotalOrdersByProduct;
 
 					if (File.Exists(fullPath))
 					{

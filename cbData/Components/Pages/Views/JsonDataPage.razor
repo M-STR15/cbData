@@ -3,16 +3,24 @@
 @using cbData.Shared.Stories
 @using cbData.Stories
 
-<h3>JSON data</h3>
+<h1>JSON data</h1>
+<h2>Uložiště:@_pathsStory?.BaseDirectory?.ToString()</h2>
+<h2>Název souboru:@_pathsStory?.JsonBufferName?.ToString()</h2>
 
 @if(@jsonText!=null)
 {
     <P>@jsonText</p>
 }
+else
+{
+    <p>Načítání dat...</p>
+}
 
 @code {
     [Inject]
     private CJsonService _cJsonService { get; set; }
+    [Inject]
+    private PathsStory _pathsStory { get; set; }
     private string? jsonText;
 
     protected override async Task OnInitializedAsync()
