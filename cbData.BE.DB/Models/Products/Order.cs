@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace cbData.BE.DB.Models.Products
 {
 	[Table("Orders", Schema = "Products")]
-	public class Order : Stamp
+	public class Order : Stamp, IOrder
 	{
 		public Order()
 		{

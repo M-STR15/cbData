@@ -14,7 +14,7 @@ namespace cbData.BE.DB.Services
 			_contextFactory = contextFactory;
 		}
 
-		public async Task<Order?> AddOrderAsync(Order order)
+		public async Task<IOrder?> AddOrderAsync(IOrder order)
 		{
 			try
 			{
@@ -34,8 +34,9 @@ namespace cbData.BE.DB.Services
 					return null;
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				var test = ex.ToString();
 				return null;
 			}
 		}
@@ -60,8 +61,9 @@ namespace cbData.BE.DB.Services
 					return null;
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				var test = ex;
 				return null;
 			}
 		}

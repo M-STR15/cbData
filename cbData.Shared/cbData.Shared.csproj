@@ -7,9 +7,9 @@
 		<GenerateBuildInfoScript>$(MSBuildProjectDirectory)\Scripts\BuildDateGenerateClass.ps1</GenerateBuildInfoScript>
 	</PropertyGroup>
 
-	<Target Name="RunPowerShellScript" BeforeTargets="BeforeBuild">
+	<!--<Target Name="RunPowerShellScript" BeforeTargets="BeforeBuild">
 		<Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(GenerateBuildInfoScript)&quot;" />
-	</Target>
+	</Target>-->
 
 	<ItemGroup>
 		<PackageReference Include="Serilog" Version="4.2.0" />
