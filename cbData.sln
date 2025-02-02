@@ -17,6 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{10A91F4C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BE", "BE", "{B4899AE6-7080-4D71-9914-193EA753A424}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{5F3E80E7-C23E-44B9-ACDC-B2FD04BD3FB4}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Pracovní složka\Desktop\cbData\cbDataTest.postman_collection.json = ..\..\Pracovní složka\Desktop\cbData\cbDataTest.postman_collection.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,5 +56,6 @@ Global
 		{F2840544-93CB-4F09-A7F5-C3E3231766D6} = {B4899AE6-7080-4D71-9914-193EA753A424}
 		{5276362A-3D15-4B6D-B36B-86C40FC755AF} = {B4899AE6-7080-4D71-9914-193EA753A424}
 		{802FF572-BE92-4C45-AB9C-661148B99BBF} = {10A91F4C-F6E1-4B74-B0FF-DB86D9D6AFDF}
+		{5F3E80E7-C23E-44B9-ACDC-B2FD04BD3FB4} = {10A91F4C-F6E1-4B74-B0FF-DB86D9D6AFDF}
 	EndGlobalSection
 EndGlobal

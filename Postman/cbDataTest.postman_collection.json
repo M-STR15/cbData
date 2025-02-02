@@ -1,0 +1,316 @@
+{
+	"info": {
+		"_postman_id": "21626432-6462-4ce4-9659-9980ed290707",
+		"name": "cbDataTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33210924"
+	},
+	"item": [
+		{
+			"name": "GET-api/v1/products/5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Testuje, zda odpověď vrací status 200 (OK)\r",
+							"pm.test(\"Status kód je 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Testuje, zda odpověď je JSON\r",
+							"pm.test(\"Odpověď je ve formátu JSON\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\").toLowerCase()).to.eql(\"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"// Testuje, zda odpověď obsahuje požadované vlastnosti\r",
+							"pm.test(\"Testuje, zda odpověď obsahuje požadované vlastnosti\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    // Ověří, že odpověď obsahuje požadované vlastnosti a nejsou null\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"    pm.expect(jsonData).to.have.property(\"name\").that.is.not.null;\r",
+							"    pm.expect(jsonData.name).to.be.a(\"string\"); // Zkontroluje, že name je string\r",
+							"    pm.expect(jsonData).to.have.property(\"description\").that.is.null;\r",
+							"});\r",
+							"\r",
+							"// Odpověď obsahuje správná data\r",
+							"pm.test(\"Odpověď obsahuje správná data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    // Ověření, že id je 5\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.equals(5);\r",
+							"    \r",
+							"    // Ověření, že name je \"Product 5\"\r",
+							"    pm.expect(jsonData).to.have.property(\"name\").that.equals(\"Product 5\");\r",
+							"    \r",
+							"    // Ověření, že description je null\r",
+							"    pm.expect(jsonData).to.have.property(\"description\").that.is.null;\r",
+							"    \r",
+							"    // Ověření, že orders je prázdné pole\r",
+							"    pm.expect(jsonData).to.have.property(\"orders\").that.is.an(\"array\").and.is.empty;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7246/api/v1/products/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7246",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST-api/v1/products/orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Odpověď má správný status kód\", function () {\r",
+							"    pm.response.to.have.status(200); // Očekáváme status 200 OK\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď je ve formátu JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď obsahuje správná data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    // Ověřujeme, že id produktu není null nebo undefined\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.not.null.and.is.not.undefined;\r",
+							"  \r",
+							"    // Ověřujeme, že quantity není null nebo undefined a je číslo\r",
+							"    pm.expect(jsonData).to.have.property(\"quantity\").that.is.a(\"number\").that.is.not.null;\r",
+							"    \r",
+							"    // Ověřujeme správnost updateUtcDateTime\r",
+							"    pm.expect(jsonData).to.have.property(\"updateUtcDateTime\").to.not.be.NaN;;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"productId\": 5,\r\n  \"quantity\": 100,\r\n  \"updateUtcDateTime\": \"2025-02-02T22:12:45.177Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7246/api/v1/products/orders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7246",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT-api/v1/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Odpověď má správný status kód\", function () {\r",
+							"    pm.response.to.have.status(200); // Očekáváme status 200 OK\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď je ve formátu JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď obsahuje správná properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    // Ověření, že id je číselné a není null\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\").that.is.not.null;\r",
+							"\r",
+							"    // Ověření, že produkt má správné vlastnosti\r",
+							"    pm.expect(jsonData).to.have.property(\"name\").that.is.not.null;\r",
+							"    \r",
+							"    // Ověření quantity\r",
+							"    pm.expect(jsonData).to.have.property(\"description\").that.is.a(\"string\").that.is.not.null;\r",
+							"\r",
+							"    // Ověření správnosti updateUtcDateTime\r",
+							"    pm.expect(jsonData).to.have.property(\"orders\").that.is.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď obsahuje správná data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"  // Ověření, že quantity je číslo, není null a rovná se 100\r",
+							"    pm.expect(jsonData).to.have.property(\"name\").that.is.a(\"string\").that.is.not.null;\r",
+							"    pm.expect(jsonData.name).to.eql(pm.environment.get(\"productName\"));\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"description\").that.is.a(\"string\").that.is.not.null;\r",
+							"    pm.expect(jsonData.description).to.eql(\"Test\"); \r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\").that.is.not.null;\r",
+							"    pm.expect(jsonData.id).to.eql(10); \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Získání aktuálního data a formátování na požadovaný formát (např. \"yyyy-MM-dd_HH-mm-ss\")\r",
+							"const currentDate = new Date().toISOString().replace(/[:.]/g, '-');\r",
+							"\r",
+							"// Vytvoření nového názvu produktu podle aktuálního data\r",
+							"const newName = `Product_${currentDate}`;\r",
+							"\r",
+							"// Uložení hodnoty do Postman environment variable\r",
+							"pm.environment.set(\"productName\", newName);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"Test\",\r\n  \"id\": 10,\r\n  \"name\": \"{{productName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7246/api/v1/products",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7246",
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT-api/v1/products/orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Odpověď má správný status kód\", function () {\r",
+							"    pm.response.to.have.status(200); // Očekáváme status 200 OK\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď je ve formátu JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď obsahuje správná properties\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    // Ověření, že id je číselné a není null\r",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\").that.is.not.null;\r",
+							"\r",
+							"    // Ověření, že produkt má správné vlastnosti\r",
+							"    pm.expect(jsonData).to.have.property(\"product\").that.is.null;\r",
+							"    \r",
+							"    // Ověření quantity\r",
+							"    pm.expect(jsonData).to.have.property(\"quantity\").that.is.a(\"number\").that.is.not.null;\r",
+							"\r",
+							"    // Ověření správnosti updateUtcDateTime\r",
+							"    pm.expect(jsonData).to.have.property(\"updateUtcDateTime\").that.is.not.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Odpověď obsahuje správná data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"  // Ověření, že quantity je číslo, není null a rovná se 100\r",
+							"    pm.expect(jsonData).to.have.property(\"quantity\").that.is.a(\"number\").that.is.not.null;\r",
+							"    pm.expect(jsonData.quantity).to.eql(200); \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 200,\r\n  \"productId\": 5,\r\n  \"quantity\": 200\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7246/api/v1/products/orders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7246",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
