@@ -13,16 +13,10 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(200, "Úspěšné získání položky/položek [Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)")]
 	[SwaggerResponse(404, "Položka/Položky nenalezeny.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)")]
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
-	public class ProductController : ControllerBase
+	public class ProductController(ProductDbService productDbService, IEventLogService eventLogService) : ControllerBase
 	{
-		private ProductDbService _productDbService;
-		private IEventLogService _eventLogService;
-
-		public ProductController(ProductDbService productDbService, IEventLogService eventLogService)
-		{
-			_productDbService = productDbService;
-			_eventLogService = eventLogService;
-		}
+		private readonly ProductDbService _productDbService = productDbService;
+		private readonly IEventLogService _eventLogService = eventLogService;
 
 		#region GET
 

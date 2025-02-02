@@ -23,8 +23,14 @@ namespace cbData.BE.BusinessLogic.Models.Products
 
 		public string? Description { get; set; }
 		public int Id { get; set; }
+<<<<<<< HEAD
 		public string Name { get; set; } = string.Empty;
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+=======
+		public string Name { get; set; }
+
+		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+>>>>>>> Feature/#8_Tests
 		public ICollection<OrderApi>? Orders { get; set; }
 
 		public Product ToProduct()

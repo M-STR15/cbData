@@ -13,16 +13,10 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(200, "Úspěšné získání položky/položek [Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)")]
 	[SwaggerResponse(404, "Položka/Položky nenalezeny.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)")]
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
-	public class ReportController : ControllerBase
+	public class ReportController(ReportDbService reportDbService, IEventLogService eventLogService) : ControllerBase
 	{
-		private ReportDbService _reportDbService;
-		private IEventLogService _eventLogService;
-
-		public ReportController(ReportDbService reportDbService, IEventLogService eventLogService)
-		{
-			_reportDbService = reportDbService;
-			_eventLogService = eventLogService;
-		}
+		private readonly ReportDbService _reportDbService = reportDbService;
+		private readonly IEventLogService _eventLogService = eventLogService;
 
 		[HttpGet("api/v1/reports/total-order-by-product")]
 		public async Task<IActionResult> GetTotalOrdersByProductAsync()

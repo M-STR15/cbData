@@ -4,21 +4,13 @@ using cbData.Stories;
 
 namespace cbData.Services
 {
-	public class TimedHostedService : IHostedService, IDisposable
+	public class TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService, CJsonService cJsonService) : IHostedService, IDisposable
 	{
 		private Timer? _refreshBufferTimer;
-		private readonly ProductStory? _productStory;
-		private readonly HttpClient _httpClient;
-		private readonly IEventLogService _eventLogService;
-		private readonly CJsonService _cJsonService;
-
-		public TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService, CJsonService cJsonService)
-		{
-			_productStory = productStory;
-			_httpClient = httpClientFactory.CreateClient("ApiClient");
-			_eventLogService = eventLogService;
-			_cJsonService = cJsonService;
-		}
+		private readonly ProductStory? _productStory = productStory;
+		private readonly HttpClient _httpClient = httpClientFactory.CreateClient("ApiClient");
+		private readonly IEventLogService _eventLogService = eventLogService;
+		private readonly CJsonService _cJsonService = cJsonService;
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{

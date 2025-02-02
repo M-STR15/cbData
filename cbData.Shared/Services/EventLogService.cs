@@ -1,9 +1,8 @@
 ﻿using cbData.Shared.Models;
 using cbData.Shared.Stories;
+using Newtonsoft.Json;
 using Serilog;
 using Serilog.Events;
-using Newtonsoft.Json;
-using System.IO;
 
 namespace cbData.Shared.Services
 {

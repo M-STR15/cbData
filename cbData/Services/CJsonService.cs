@@ -5,18 +5,11 @@ using Newtonsoft.Json;
 
 namespace cbData.Services
 {
-	public class CJsonService
+	public class CJsonService(ProductStory? productStory, PathsStory pathsStory, IEventLogService eventLogService)
 	{
-		private ProductStory? _productStory;
-		private readonly PathsStory _pathsStory;
-		private readonly IEventLogService _eventLogService;
-
-		public CJsonService(ProductStory? productStory, PathsStory pathsStory, IEventLogService eventLogService)
-		{
-			_productStory = productStory;
-			_pathsStory = pathsStory;
-			_eventLogService = eventLogService;
-		}
+		private readonly ProductStory? _productStory = productStory;
+		private readonly PathsStory _pathsStory = pathsStory;
+		private readonly IEventLogService _eventLogService = eventLogService;
 
 		public async Task SaveBufferDataToJsonAsync()
 		{
