@@ -10,12 +10,14 @@ namespace cbData.Services
 		private ProductStory? _productStory;
 		private readonly PathsStory _pathsStory;
 		private readonly IEventLogService _eventLogService;
+
 		public CJsonService(ProductStory? productStory, PathsStory pathsStory, IEventLogService eventLogService)
 		{
 			_productStory = productStory;
 			_pathsStory = pathsStory;
 			_eventLogService = eventLogService;
 		}
+
 		public async Task SaveBufferDataToJsonAsync()
 		{
 			try
@@ -33,7 +35,7 @@ namespace cbData.Services
 					if (jsonString != null)
 					{
 						if (!Directory.Exists(path))
-							Directory.CreateDirectory(path);
+							_ = Directory.CreateDirectory(path);
 
 						await File.WriteAllTextAsync(fullPath, jsonString);
 					}

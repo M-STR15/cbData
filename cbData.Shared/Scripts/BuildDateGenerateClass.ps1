@@ -11,7 +11,7 @@ namespace cbData.Shared.Models
 {
 	/// <summary>
 	/// Generovaná třída, i datem vytovřeného buildu.
-	/// Tato informace slouží pro zobrazení v číla verze. 
+	/// Tato informace slouží pro zobrazení v číla verze.
 	/// </summary>
     public static class BuildInfo
     {
@@ -32,4 +32,3 @@ namespace cbData.Shared.Models
 Set-Content -Path $outputPath -Value $csharpCode
 
 Write-Output "C# soubor byl úspěšně vygenerován: $outputPath"
-

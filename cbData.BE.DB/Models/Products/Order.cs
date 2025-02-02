@@ -29,11 +29,13 @@ namespace cbData.BE.DB.Models.Products
 
 		[Key]
 		public int Id { get; set; }
+
 		[ForeignKey(nameof(ProductId))]
 		public Product? Product { get; set; }
 
 		[Required]
 		public int ProductId { get; set; }
+
 		[Required]
 		public int Quantity { get; set; }
 	}

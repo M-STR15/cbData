@@ -7,6 +7,7 @@ namespace cbData.BE.BusinessLogic.Models.Products
 		string? Description { get; set; }
 		int Id { get; set; }
 		string Name { get; set; }
+
 		Product ToProduct();
 	}
 }

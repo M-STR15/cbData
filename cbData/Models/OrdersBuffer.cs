@@ -1,5 +1,4 @@
 ﻿using cbData.BE.BusinessLogic.Models.Reports;
-using cbData.BE.DB.Models.Products;
 
 namespace cbData.Models
 {
@@ -9,6 +8,7 @@ namespace cbData.Models
 		/// Poslední aktualizace dat.
 		/// </summary>
 		public DateTime LastUpdate { get; set; }
+
 		/// <summary>
 		/// Hodnoty uložné v paměti od poslední aktualizace.
 		/// </summary>

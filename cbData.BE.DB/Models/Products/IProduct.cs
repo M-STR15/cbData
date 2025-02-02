@@ -1,5 +1,4 @@
-﻿
-namespace cbData.BE.DB.Models.Products
+﻿namespace cbData.BE.DB.Models.Products
 {
 	public interface IProduct
 	{

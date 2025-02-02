@@ -7,7 +7,6 @@ namespace cbData.BE.DB.Services
 {
 	public class ProductDbService : IDisposable
 	{
-
 		private readonly IDbContextFactory<CbDataDbContext> _contextFactory;
 
 		public ProductDbService(IDbContextFactory<CbDataDbContext> contextFactory)
@@ -52,7 +51,6 @@ namespace cbData.BE.DB.Services
 					await db.SaveChangesAsync();
 
 					return product;
-
 				}
 				else
 				{
@@ -122,7 +120,6 @@ namespace cbData.BE.DB.Services
 
 		public void Dispose()
 		{
-
 		}
 
 		public async Task<bool> ExistOrderAsync(int orderId)
@@ -201,6 +198,7 @@ namespace cbData.BE.DB.Services
 				return null;
 			}
 		}
+
 		public async Task<Order?> UpdateOrder(Order order)
 		{
 			try

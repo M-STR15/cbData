@@ -1,7 +1,5 @@
 ﻿using cbData.BE.BusinessLogic.Models.Reports;
-using cbData.BE.DB.Models.Products;
 using cbData.Shared.Services;
-using cbData.Shared.Stories;
 using cbData.Stories;
 
 namespace cbData.Services
@@ -9,10 +7,11 @@ namespace cbData.Services
 	public class TimedHostedService : IHostedService, IDisposable
 	{
 		private Timer? _refreshBufferTimer;
-		private ProductStory? _productStory;
+		private readonly ProductStory? _productStory;
 		private readonly HttpClient _httpClient;
 		private readonly IEventLogService _eventLogService;
 		private readonly CJsonService _cJsonService;
+
 		public TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService, CJsonService cJsonService)
 		{
 			_productStory = productStory;
@@ -41,6 +40,7 @@ namespace cbData.Services
 				_eventLogService.WriteError(Guid.Parse("37fdf305-03b4-46dd-961e-2af6e7c9b013"), ex.Message);
 			}
 		}
+
 		private async Task refreshBufferData()
 		{
 			try
@@ -68,7 +68,7 @@ namespace cbData.Services
 
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
-			_refreshBufferTimer?.Change(Timeout.Infinite, 0);
+			_ = (_refreshBufferTimer?.Change(Timeout.Infinite, 0));
 			return Task.CompletedTask;
 		}
 

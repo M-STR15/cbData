@@ -13,6 +13,7 @@ namespace cbData.Shared.Services
 		private readonly string _assemblyName;
 		private readonly string _path;
 		private readonly PathsStory _pathStory;
+
 		public EventLogService(PathsStory pathsStory)
 		{
 			_pathStory = pathsStory;
@@ -34,13 +35,13 @@ namespace cbData.Shared.Services
 				  restrictedToMinimumLevel: LogEventLevel.Information // Minimální úroveň logování
 			  )
 			  .CreateLogger();
-
 		}
 
 		~EventLogService()
 		{
 			Dispose();
 		}
+
 		public void Dispose()
 		{
 			Log.CloseAndFlush();

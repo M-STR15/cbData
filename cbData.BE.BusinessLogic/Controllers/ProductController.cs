@@ -4,21 +4,28 @@ using cbData.BE.DB.Services;
 using cbData.Shared.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace cbData.BE.BusinessLogic.Controllers
 {
 	[ApiController]
 	[ApiExplorerSettings(GroupName = "v1")]
+	[SwaggerResponse(200, "Úspěšné získání položky/položek [Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)")]
+	[SwaggerResponse(404, "Položka/Položky nenalezeny.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)")]
+	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
 	public class ProductController : ControllerBase
 	{
 		private ProductDbService _productDbService;
 		private IEventLogService _eventLogService;
+
 		public ProductController(ProductDbService productDbService, IEventLogService eventLogService)
 		{
 			_productDbService = productDbService;
 			_eventLogService = eventLogService;
 		}
+
 		#region GET
+
 		/// <summary>
 		/// Získá objednávku podle ID
 		/// </summary>
@@ -133,8 +140,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 				Orders = product.Orders?.Select(x => new OrderApi(x)).ToList() ?? null
 			};
 		}
+
 		#endregion GET
+
 		#region POST
+
 		/// <summary>
 		/// Přidá novou objednávku
 		/// </summary>
@@ -174,8 +184,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
 		#endregion POST
+
 		#region PUT
+
 		/// <summary>
 		/// Aktualizuje objednávku
 		/// </summary>
@@ -215,8 +228,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
 		#endregion PUT
+
 		#region DELETE
+
 		/// <summary>
 		/// Smaže objednávku podle ID
 		/// </summary>
@@ -256,6 +272,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
 		#endregion DELETE
 	}
 }

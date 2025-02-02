@@ -51,7 +51,12 @@ builder.Services.AddSwaggerGen(options =>
 	var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
+	var beXmlPath = Path.Combine(AppContext.BaseDirectory, "cbData.BE.BusinessLogic.xml");
+
 	options.IncludeXmlComments(xmlPath);
+	options.IncludeXmlComments(beXmlPath);
+
+	options.EnableAnnotations();
 	options.SwaggerDoc("v1", new OpenApiInfo
 	{
 		Title = "cbData",
@@ -59,7 +64,6 @@ builder.Services.AddSwaggerGen(options =>
 		Description = ""
 	});
 });
-
 
 var app = builder.Build();
 
