@@ -7,7 +7,7 @@ namespace cbData.Services
 	public class TimedHostedService : IHostedService, IDisposable
 	{
 		private Timer? _refreshBufferTimer;
-		private ProductStory? _productStory;
+		private readonly ProductStory? _productStory;
 		private readonly HttpClient _httpClient;
 		private readonly IEventLogService _eventLogService;
 		private readonly CJsonService _cJsonService;
@@ -67,7 +67,7 @@ namespace cbData.Services
 
 		public Task StopAsync(CancellationToken cancellationToken)
 		{
-			_refreshBufferTimer?.Change(Timeout.Infinite, 0);
+			_ = (_refreshBufferTimer?.Change(Timeout.Infinite, 0));
 			return Task.CompletedTask;
 		}
 

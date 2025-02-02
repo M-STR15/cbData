@@ -35,7 +35,7 @@ namespace cbData.Services
 					if (jsonString != null)
 					{
 						if (!Directory.Exists(path))
-							Directory.CreateDirectory(path);
+							_ = Directory.CreateDirectory(path);
 
 						await File.WriteAllTextAsync(fullPath, jsonString);
 					}
