@@ -1,5 +1,4 @@
 ﻿#pragma warning disable IDE0058
-
 using cbData.BE.DB.DataContext;
 using cbData.BE.DB.Models.Products;
 using Microsoft.EntityFrameworkCore;
@@ -197,11 +196,21 @@ namespace cbData.BE.DB.Services
 				if (_contextFactory != null)
 				{
 					var db = await _contextFactory.CreateDbContextAsync();
-					db.ChangeTracker.Clear();
-					db.Update(order);
+					var existingOrder = await db.Orders.Where(o => o.Id == order.Id).FirstOrDefaultAsync();
+
+					if (existingOrder == null)
+					{
+						throw new Exception("Objednávka nenalezena.");
+					}
+
+					existingOrder.ProductId = order.ProductId;
+					existingOrder.Quantity = order.Quantity;
+					existingOrder.UpdateUtcDateTime = DateTime.UtcNow;
+
+					db.Orders.Update(existingOrder);
 					await db.SaveChangesAsync();
 
-					return order;
+					return existingOrder;
 				}
 				else
 				{
@@ -221,8 +230,18 @@ namespace cbData.BE.DB.Services
 				if (_contextFactory != null)
 				{
 					var db = await _contextFactory.CreateDbContextAsync();
-					db.ChangeTracker.Clear();
-					db.Update(product);
+
+					var existingProduct = await db.Products.Where(o => o.Id == product.Id).FirstOrDefaultAsync();
+
+					if (existingProduct == null)
+					{
+						throw new Exception("Produkt nenalezeno.");
+					}
+
+					existingProduct.Name = product.Name;
+					existingProduct.Description = product.Description;
+
+					db.Products.Update(existingProduct);
 					await db.SaveChangesAsync();
 
 					return product;

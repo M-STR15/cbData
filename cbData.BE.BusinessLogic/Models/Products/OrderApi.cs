@@ -31,7 +31,7 @@ namespace cbData.BE.BusinessLogic.Models.Products
 		}
 		public Order ToOrder()
 		{
-			return new Order(ProductId, Quantity);
+			return new Order(Id, ProductId, Quantity, UpdateUtcDateTime);
 		}
 
 		private static ProductApi? convertProduct(Product? product)
