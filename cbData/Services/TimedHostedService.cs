@@ -24,7 +24,8 @@ namespace cbData.Services
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
 			_refreshBufferTimer = new Timer(doWork, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(20));
-			_eventLogService.WriteInformation(Guid.Parse("1f7650c4-65a8-4738-b8a2-13e5140f5cc1"), "Nastartování timeru pro ukládání hodnot do bufferu.");
+			var message = "Nastartování timeru pro ukládání hodnot do bufferu.";
+			_eventLogService.WriteInformation(Guid.Parse("1f7650c4-65a8-4738-b8a2-13e5140f5cc1"), message);
 			return Task.CompletedTask;
 		}
 

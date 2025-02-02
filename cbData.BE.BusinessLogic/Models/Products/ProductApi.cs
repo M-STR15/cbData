@@ -16,14 +16,14 @@ namespace cbData.BE.BusinessLogic.Models.Products
 			Orders = orders;
 		}
 
-		public ProductApi(Product product) : this(product.Id, product.Name, product.Description)
+		public ProductApi(Product? product) : this(product?.Id ?? 0, product?.Name ?? "", product?.Description)
 		{
 			Orders = product?.Orders?.Select(x => new OrderApi(x))?.ToList();
 		}
 
 		public string? Description { get; set; }
 		public int Id { get; set; }
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public ICollection<OrderApi>? Orders { get; set; }
 

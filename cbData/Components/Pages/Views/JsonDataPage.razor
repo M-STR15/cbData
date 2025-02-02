@@ -9,18 +9,18 @@
 
 @if(@jsonText!=null)
 {
-    <P>@jsonText</p>
+    <label>@jsonText</label>
 }
 else
 {
-    <p>Načítání dat...</p>
+    <label>Načítání dat...</label>
 }
 
 @code {
     [Inject]
-    private CJsonService _cJsonService { get; set; }
+    private CJsonService? _cJsonService { get; set; }
     [Inject]
-    private PathsStory _pathsStory { get; set; }
+    private PathsStory? _pathsStory { get; set; }
     private string? jsonText;
 
     protected override async Task OnInitializedAsync()

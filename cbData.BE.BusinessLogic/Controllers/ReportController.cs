@@ -28,7 +28,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 				if (model != null)
 				{
 					//var json= JsonConvert.SerializeObject(model);
-					var modelConvert = model.Select(x => new TotalOrdersByProductApi(new ProductApi(x.Product), x.TotalOrders)).ToList();
+					var modelConvert = model.Select(x => new TotalOrdersByProductApi(new ProductApi(x?.Product), x?.TotalOrders ?? 0)).ToList();
 					return Ok(model);
 				}
 				else

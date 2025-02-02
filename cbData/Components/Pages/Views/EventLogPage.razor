@@ -1,0 +1,53 @@
+﻿@page "/eventlogs"
+@using cbData.Shared.Models
+@using cbData.Shared.Services
+@inject IEventLogService? _eventLogService;
+
+<h1>EventLogs</h1>
+
+@if (_eventLogs != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th style="width:200px;text-align:left;text-decoration:underline;">@nameof(CustomLogEvent.Timestamp)</th>
+                <th style="text-align:left;text-decoration:underline;">@nameof(CustomLogEvent.Message)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (_eventLogs != null)
+            {
+                @foreach (var item in _eventLogs)
+                {
+                    <tr>
+                        <td style="width:200px;text-align:left;">@item.Timestamp</td>
+                        <td>@item.Message</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <label>Načítání dat...</label>
+}
+
+
+@code {
+    private List<CustomLogEvent>? _eventLogs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _eventLogs = _eventLogService.ReadEventLogs();
+        }
+        catch (Exception ex)
+        {
+            _eventLogService.WriteError(Guid.Parse("37c732c6-86b0-4674-8b0c-b49ce4aabc35"), ex.Message);
+        }
+        base.StateHasChanged();
+        await base.OnInitializedAsync();
+    }
+}

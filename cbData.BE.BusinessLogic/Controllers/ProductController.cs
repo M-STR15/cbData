@@ -111,9 +111,9 @@ namespace cbData.BE.BusinessLogic.Controllers
 				UpdateUtcDateTime = order.UpdateUtcDateTime,
 				Product = new ProductApi
 				{
-					Id = order.Product.Id,
-					Name = order.Product.Name,
-					Description = order.Product.Description
+					Id = order?.Product?.Id ?? 0,
+					Name = order?.Product?.Name ?? "",
+					Description = order?.Product?.Description
 				},
 			};
 		}

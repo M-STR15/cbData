@@ -8,33 +8,35 @@
 <h1>Buffer data</h1>
 
 <h2>UTC Datum a čas poslední aktualizace:@ProductStory?.OrdersBuffer?.LastUpdate.ToString()</h2>
-<table>
-    <thead>
-        <tr>
-            <th style="width:200px;text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.Product)</th>
-            <th style="text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.TotalOrders)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (_totalOrdersByProduct != null)
-        {
-            @foreach (var item in _totalOrdersByProduct)
+@if (_totalOrdersByProduct != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th style="width:200px;text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.Product)</th>
+                <th style="text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.TotalOrders)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (_totalOrdersByProduct != null)
             {
-                <tr data-widget="expandable-table" aria-expanded="false">
-                    <td style="width:200px;text-align:left;">@item.Product?.Name</td>
-                    <td>@item.TotalOrders</td>
-                </tr>
+                @foreach (var item in _totalOrdersByProduct)
+                {
+                    <tr data-widget="expandable-table" aria-expanded="false">
+                        <td style="width:200px;text-align:left;">@item.Product?.Name</td>
+                        <td>@item.TotalOrders</td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
+else
+{
+    <label>Načítání dat...</label>
+}
 
 @code {
     private List<TotalOrdersByProductApi>? _totalOrdersByProduct => ProductStory?.OrdersBuffer?.TotalOrdersByProduct;
 
-    protected override Task OnInitializedAsync()
-    {
-        var test = ProductStory;
-        return base.OnInitializedAsync();
-    }
 }

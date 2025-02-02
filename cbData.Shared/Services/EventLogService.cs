@@ -3,6 +3,7 @@ using cbData.Shared.Stories;
 using Serilog;
 using Serilog.Events;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace cbData.Shared.Services
 {
@@ -83,12 +84,14 @@ namespace cbData.Shared.Services
 		public List<CustomLogEvent> ReadEventLogs()
 		{
 			var events = new List<CustomLogEvent>();
-			string logFilePath = $"logs/{_assemblyName}{DateTime.Now.ToString("yyyyMMdd")}.log";
+			string logFilePath = $"{_path}\\{_assemblyName}{DateTime.Now.ToString("yyyyMMdd")}.log";
 
 			using (FileStream fs = new FileStream(logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			using (StreamReader sr = new StreamReader(fs))
 			{
 				string line;
+				if (sr.EndOfStream)
+					return events;
 				while ((line = sr.ReadLine()) != null)
 				{
 					var message = ParseLogEntry(line);
