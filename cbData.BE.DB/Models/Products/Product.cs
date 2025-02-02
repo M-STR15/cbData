@@ -8,16 +8,6 @@ namespace cbData.BE.DB.Models.Products
 	[Index(nameof(Name), IsUnique = true)]
 	public class Product : IProduct, IProductBase
 	{
-		public Product()
-		{ }
-
-		public Product(int id, string name, string? description = null)
-		{
-			Id = id;
-			Name = name;
-			Description = description;
-		}
-
 		public string? Description { get; set; }
 
 		[Key]
@@ -28,5 +18,15 @@ namespace cbData.BE.DB.Models.Products
 		public string Name { get; set; } = string.Empty;
 
 		public ICollection<Order>? Orders { get; set; }
+
+		public Product()
+		{ }
+
+		public Product(int id, string name, string? description = null)
+		{
+			Id = id;
+			Name = name;
+			Description = description;
+		}
 	}
 }

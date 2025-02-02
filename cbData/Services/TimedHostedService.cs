@@ -6,17 +6,27 @@ namespace cbData.Services
 {
 	public class TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService, CJsonService cJsonService) : IHostedService, IDisposable
 	{
-		private Timer? _refreshBufferTimer;
-		private readonly ProductStory? _productStory = productStory;
-		private readonly HttpClient _httpClient = httpClientFactory.CreateClient("ApiClient");
-		private readonly IEventLogService _eventLogService = eventLogService;
 		private readonly CJsonService _cJsonService = cJsonService;
+		private readonly IEventLogService _eventLogService = eventLogService;
+		private readonly HttpClient _httpClient = httpClientFactory.CreateClient("ApiClient");
+		private readonly ProductStory? _productStory = productStory;
+		private Timer? _refreshBufferTimer;
+		public void Dispose()
+		{
+			_refreshBufferTimer?.Dispose();
+		}
 
 		public Task StartAsync(CancellationToken cancellationToken)
 		{
 			_refreshBufferTimer = new Timer(doWork, null, TimeSpan.FromSeconds(2), TimeSpan.FromSeconds(20));
 			var message = "Nastartování timeru pro ukládání hodnot do bufferu.";
 			_eventLogService.WriteInformation(Guid.Parse("1f7650c4-65a8-4738-b8a2-13e5140f5cc1"), message);
+			return Task.CompletedTask;
+		}
+
+		public Task StopAsync(CancellationToken cancellationToken)
+		{
+			_ = (_refreshBufferTimer?.Change(Timeout.Infinite, 0));
 			return Task.CompletedTask;
 		}
 
@@ -56,17 +66,6 @@ namespace cbData.Services
 			{
 				_eventLogService.WriteError(Guid.Parse("38eeba7d-e0f4-4fc2-a698-07db6b2f0569"), ex.Message);
 			}
-		}
-
-		public Task StopAsync(CancellationToken cancellationToken)
-		{
-			_ = (_refreshBufferTimer?.Change(Timeout.Infinite, 0));
-			return Task.CompletedTask;
-		}
-
-		public void Dispose()
-		{
-			_refreshBufferTimer?.Dispose();
 		}
 	}
 }

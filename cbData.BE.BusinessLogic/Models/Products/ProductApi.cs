@@ -5,6 +5,15 @@ namespace cbData.BE.BusinessLogic.Models.Products
 {
 	public class ProductApi : IProduct, IProductApiBase, IProductApiAddBase
 	{
+		public string? Description { get; set; }
+
+		public int Id { get; set; }
+
+		public string Name { get; set; } = string.Empty;
+
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public ICollection<OrderApi>? Orders { get; set; }
+
 		public ProductApi()
 		{ }
 
@@ -20,14 +29,6 @@ namespace cbData.BE.BusinessLogic.Models.Products
 		{
 			Orders = product?.Orders?.Select(x => new OrderApi(x))?.ToList();
 		}
-
-		public string? Description { get; set; }
-		public int Id { get; set; }
-		public string Name { get; set; } = string.Empty;
-
-		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-		public ICollection<OrderApi>? Orders { get; set; }
-
 		public Product ToProduct()
 		{
 			return new Product(Id, Name, Description);

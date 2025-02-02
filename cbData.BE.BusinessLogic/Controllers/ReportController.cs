@@ -15,9 +15,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
 	public class ReportController(ReportDbService reportDbService, IEventLogService eventLogService) : ControllerBase
 	{
-		private readonly ReportDbService _reportDbService = reportDbService;
 		private readonly IEventLogService _eventLogService = eventLogService;
-
+		private readonly ReportDbService _reportDbService = reportDbService;
 		[HttpGet("api/v1/reports/total-order-by-product")]
 		public async Task<IActionResult> GetTotalOrdersByProductAsync()
 		{

@@ -11,6 +11,8 @@ namespace cbData.Shared.Services
 		private readonly string _assemblyName;
 		private readonly PathsStory _pathStory;
 		private readonly string _version;
+		public string Path { get; private set; }
+
 		public EventLogService(PathsStory pathsStory)
 		{
 			_pathStory = pathsStory;
@@ -38,8 +40,6 @@ namespace cbData.Shared.Services
 		{
 			Dispose();
 		}
-
-		public string Path { get; private set; }
 		public void Dispose()
 		{
 			Log.CloseAndFlush();

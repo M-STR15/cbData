@@ -42,11 +42,11 @@ else
     {
         try
         {
-            _eventLogs = _eventLogService.ReadEventLogs();
+            _eventLogs = _eventLogService?.ReadEventLogs();
         }
         catch (Exception ex)
         {
-            _eventLogService.WriteError(Guid.Parse("37c732c6-86b0-4674-8b0c-b49ce4aabc35"), ex.Message);
+            _eventLogService?.WriteError(Guid.Parse("37c732c6-86b0-4674-8b0c-b49ce4aabc35"), ex.Message);
         }
         base.StateHasChanged();
         await base.OnInitializedAsync();

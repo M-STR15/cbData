@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace cbData.BE.DB.Services
 {
-	public class ProductDbService : IDisposable
+	public class ProductDbService 
 	{
 		private readonly IDbContextFactory<CbDataDbContext> _contextFactory;
 
@@ -116,10 +116,6 @@ namespace cbData.BE.DB.Services
 			{
 				return false;
 			}
-		}
-
-		public void Dispose()
-		{
 		}
 
 		public async Task<bool> ExistOrderAsync(int orderId)

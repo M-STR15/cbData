@@ -6,18 +6,6 @@ namespace cbData.BE.DB.Models.Products
 {
 	public class OrderApi : IOrderApiBase
 	{
-		public OrderApi()
-		{ }
-
-		public OrderApi(Order order)
-		{
-			Id = order.Id;
-			ProductId = order.ProductId;
-			Quantity = order.Quantity;
-			UpdateUtcDateTime = order.UpdateUtcDateTime;
-			Product = convertProduct(order.Product);
-		}
-
 		public int Id { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -30,6 +18,17 @@ namespace cbData.BE.DB.Models.Products
 
 		public DateTime UpdateUtcDateTime { get; set; }
 
+		public OrderApi()
+		{ }
+
+		public OrderApi(Order order)
+		{
+			Id = order.Id;
+			ProductId = order.ProductId;
+			Quantity = order.Quantity;
+			UpdateUtcDateTime = order.UpdateUtcDateTime;
+			Product = convertProduct(order.Product);
+		}
 		public Order ToOrder()
 		{
 			return new Order(ProductId, Quantity);

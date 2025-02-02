@@ -15,9 +15,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
 	public class ProductController(ProductDbService productDbService, IEventLogService eventLogService) : ControllerBase
 	{
-		private readonly ProductDbService _productDbService = productDbService;
 		private readonly IEventLogService _eventLogService = eventLogService;
-
+		private readonly ProductDbService _productDbService = productDbService;
 		#region GET
 
 		/// <summary>

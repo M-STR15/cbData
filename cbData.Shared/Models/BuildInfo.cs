@@ -6,8 +6,8 @@ namespace cbData.Shared.Models
 	/// </summary>
 	public static class BuildInfo
 	{
-		public static string VersionStr { get; set; }
 		public static DateTime BuildDate = DateTime.Parse("2025-02-01 23:11:07");
+		public static string VersionStr { get; set; }
 
 		static BuildInfo()
 		{

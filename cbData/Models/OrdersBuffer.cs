@@ -12,6 +12,6 @@ namespace cbData.Models
 		/// <summary>
 		/// Hodnoty uložné v paměti od poslední aktualizace.
 		/// </summary>
-		public List<TotalOrdersByProductApi>? TotalOrdersByProduct { get; set; } = new();
+		public List<TotalOrdersByProductApi> TotalOrdersByProduct { get; set; } = new();
 	}
 }
