@@ -4,6 +4,7 @@ namespace cbData.Shared.Services
 {
 	public interface IEventLogService
 	{
+		string Path { get; }
 		void Dispose();
 
 		string ParseLogEntry(string logLine);

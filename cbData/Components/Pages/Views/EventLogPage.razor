@@ -4,6 +4,7 @@
 @inject IEventLogService? _eventLogService;
 
 <h1>EventLogs</h1>
+<h2>Uložiště:@_eventLogService?.Path?.ToString()</h2>
 
 @if (_eventLogs != null)
 {
