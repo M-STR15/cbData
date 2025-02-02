@@ -1,3 +1,5 @@
+#pragma warning disable IDE0058
+
 using cbData.BE.BusinessLogic.Models.Products;
 using cbData.BE.DB.DataContext;
 using cbData.BE.DB.Models.Products;
@@ -10,8 +12,8 @@ namespace cbData.BE.DB.Tests.Services
 	public class ProductDbServiceTests
 	{
 		private readonly Mock<IDbContextFactory<CbDataDbContext>> _contextFactoryMock;
-		private ProductDbService _service;
-		private DbContextOptions<CbDataDbContext> _dbOptions;
+		private readonly ProductDbService _service;
+		private readonly DbContextOptions<CbDataDbContext> _dbOptions;
 
 		public ProductDbServiceTests()
 		{
