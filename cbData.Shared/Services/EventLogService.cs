@@ -22,8 +22,6 @@ namespace cbData.Shared.Services
 			var path = $"{Path}\\{_assemblyName}.log";
 			_version = BuildInfo.VersionStr;
 
-			var format = new CustomLogEvent().GetFormat();
-
 			Log.Logger = new LoggerConfiguration()
 			  .WriteTo.File(
 				  path: path,
@@ -59,8 +57,8 @@ namespace cbData.Shared.Services
 			if (parts.Length < 3)
 				return "";
 
-			string timestamp = parts[0];  // Spojíme datum a čas
-			string level = parts[1].Trim('[', ']');  // Vyčistíme log level
+			//string timestamp = parts[0];  // Spojíme datum a čas
+			//string level = parts[1].Trim('[', ']');  // Vyčistíme log level
 			string message = parts[2];  // Zbytek je zpráva
 
 			return message;
@@ -116,7 +114,7 @@ namespace cbData.Shared.Services
 		/// <param name="guid">Identifikátor události.</param>
 		/// <param name="message">Zpráva, která má být zapsána do logu.</param>
 		public void WriteWarning(Guid guid, string message) => writeEvent(new CustomLogEvent(guid, message, LogEventLevel.Warning, _version));
-		private void writeEvent(CustomLogEvent customLogEvent)
+		private static void writeEvent(CustomLogEvent customLogEvent)
 		{
 			var jsonString = JsonConvert.SerializeObject(customLogEvent);
 			Log.Write(customLogEvent.Level, jsonString);

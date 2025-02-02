@@ -26,6 +26,7 @@ namespace cbData.Shared.Models
 			GuidID = guidID;
 		}
 #pragma warning disable IDE0058
+#pragma warning disable CA1834
 		public string GetFormat()
 		{
 			var properties = this.GetType().GetProperties();
@@ -40,5 +41,4 @@ namespace cbData.Shared.Models
 			return sb.ToString();
 		}
 	}
-#pragma warning restore IDE0058
 }

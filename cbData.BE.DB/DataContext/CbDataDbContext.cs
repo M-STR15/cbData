@@ -32,7 +32,7 @@ namespace cbData.BE.DB.DataContext
 			#endregion DEBUG
 		}
 
-		private void insertTestData(ModelBuilder modelBuilder)
+		private static void insertTestData(ModelBuilder modelBuilder)
 		{
 			var countProducts = 100;
 			var countOrders = 200;
@@ -40,7 +40,7 @@ namespace cbData.BE.DB.DataContext
 			insertTestData_Orders(modelBuilder, countProducts, countOrders);
 		}
 
-		private void insertTestData_Orders(ModelBuilder modelBuilder, int countProducts, int countOrders)
+		private static void insertTestData_Orders(ModelBuilder modelBuilder, int countProducts, int countOrders)
 		{
 			for (int i = 1; i < countOrders; i++)
 			{
@@ -50,7 +50,7 @@ namespace cbData.BE.DB.DataContext
 			}
 		}
 
-		private void insertTestData_Products(ModelBuilder modelBuilder, int countProducts)
+		private static void insertTestData_Products(ModelBuilder modelBuilder, int countProducts)
 		{
 			for (int i = 1; i < countProducts; i++)
 			{

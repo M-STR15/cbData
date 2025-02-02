@@ -101,7 +101,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// </summary>
 		/// <param name="order">Entita Order</param>
 		/// <returns>Instance OrderApi</returns>
-		private OrderApi firstLevelOrder(Order order)
+		private static OrderApi firstLevelOrder(Order order)
 		{
 			return new OrderApi()
 			{
@@ -123,7 +123,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// </summary>
 		/// <param name="product">Entita Product</param>
 		/// <returns>Instance ProductApi</returns>
-		private ProductApi firstLevelProduct(Product product)
+		private static ProductApi firstLevelProduct(Product product)
 		{
 			return new ProductApi()
 			{

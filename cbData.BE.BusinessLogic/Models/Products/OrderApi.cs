@@ -34,7 +34,7 @@ namespace cbData.BE.BusinessLogic.Models.Products
 			return new Order(ProductId, Quantity);
 		}
 
-		private ProductApi? convertProduct(Product? product)
+		private static ProductApi? convertProduct(Product? product)
 		{
 			if (product != null)
 				return new ProductApi(product?.Id ?? 0, product?.Name ?? "", product?.Description, null);
