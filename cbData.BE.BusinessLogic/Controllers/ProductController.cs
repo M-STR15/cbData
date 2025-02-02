@@ -13,12 +13,15 @@ namespace cbData.BE.BusinessLogic.Controllers
 	{
 		private ProductDbService _productDbService;
 		private IEventLogService _eventLogService;
+
 		public ProductController(ProductDbService productDbService, IEventLogService eventLogService)
 		{
 			_productDbService = productDbService;
 			_eventLogService = eventLogService;
 		}
+
 		#region GET
+
 		/// <summary>
 		/// Získá objednávku podle ID
 		/// </summary>
@@ -133,8 +136,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 				Orders = product.Orders?.Select(x => new OrderApi(x)).ToList() ?? null
 			};
 		}
+
 		#endregion GET
+
 		#region POST
+
 		/// <summary>
 		/// Přidá novou objednávku
 		/// </summary>
@@ -174,8 +180,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
 		#endregion POST
+
 		#region PUT
+
 		/// <summary>
 		/// Aktualizuje objednávku
 		/// </summary>
@@ -215,8 +224,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
 		#endregion PUT
+
 		#region DELETE
+
 		/// <summary>
 		/// Smaže objednávku podle ID
 		/// </summary>
@@ -256,6 +268,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
 		#endregion DELETE
 	}
 }

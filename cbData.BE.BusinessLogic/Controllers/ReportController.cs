@@ -13,6 +13,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 	{
 		private ReportDbService _reportDbService;
 		private IEventLogService _eventLogService;
+
 		public ReportController(ReportDbService reportDbService, IEventLogService eventLogService)
 		{
 			_reportDbService = reportDbService;

@@ -1,7 +1,5 @@
 ﻿using cbData.BE.BusinessLogic.Models.Reports;
-using cbData.BE.DB.Models.Products;
 using cbData.Shared.Services;
-using cbData.Shared.Stories;
 using cbData.Stories;
 
 namespace cbData.Services
@@ -13,6 +11,7 @@ namespace cbData.Services
 		private readonly HttpClient _httpClient;
 		private readonly IEventLogService _eventLogService;
 		private readonly CJsonService _cJsonService;
+
 		public TimedHostedService(IHttpClientFactory httpClientFactory, ProductStory? productStory, IEventLogService eventLogService, CJsonService cJsonService)
 		{
 			_productStory = productStory;
@@ -40,6 +39,7 @@ namespace cbData.Services
 				_eventLogService.WriteError(Guid.Parse("37fdf305-03b4-46dd-961e-2af6e7c9b013"), ex.Message);
 			}
 		}
+
 		private async Task refreshBufferData()
 		{
 			try

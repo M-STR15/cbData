@@ -10,7 +10,6 @@ namespace cbData.BE.DB.DataContext
 
 		public CbDataDbContext(DbContextOptions<CbDataDbContext> options) : base(options)
 		{
-
 		}
 
 		public CbDataDbContext CreateDbContext(string[] args)
@@ -30,10 +29,11 @@ namespace cbData.BE.DB.DataContext
 			modelBuilder.HasDefaultSchema("dbo");
 
 			#region DEBUG
-			insertTestData(modelBuilder);
-			#endregion
-		}
 
+			insertTestData(modelBuilder);
+
+			#endregion DEBUG
+		}
 
 		private void insertTestData(ModelBuilder modelBuilder)
 		{

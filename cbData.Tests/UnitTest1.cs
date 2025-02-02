@@ -5,7 +5,6 @@ namespace cbData.Tests
 		[Fact]
 		public void Test1()
 		{
-
 		}
 	}
 }

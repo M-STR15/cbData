@@ -24,6 +24,7 @@ namespace cbData.BE.BusinessLogic.Models.Products
 		public string? Description { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
+
 		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
 		public ICollection<OrderApi>? Orders { get; set; }
 
