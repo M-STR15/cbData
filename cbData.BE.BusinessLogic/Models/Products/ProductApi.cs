@@ -23,7 +23,6 @@ namespace cbData.BE.BusinessLogic.Models.Products
 
 		public string? Description { get; set; }
 		public int Id { get; set; }
-<<<<<<< HEAD
 		public string Name { get; set; } = string.Empty;
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
