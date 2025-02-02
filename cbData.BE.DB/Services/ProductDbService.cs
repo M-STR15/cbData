@@ -11,7 +11,7 @@ namespace cbData.BE.DB.Services
 	{
 		private readonly IDbContextFactory<CbDataDbContext> _contextFactory = contextFactory;
 
-		public async Task<IOrder?> AddOrderAsync(IOrder order)
+		public async Task<Order?> AddOrderAsync(Order order)
 		{
 			try
 			{
