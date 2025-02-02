@@ -57,7 +57,6 @@ namespace cbData.BE.DB.DataContext
 		{
 			for (int i = 1; i < countProducts; i++)
 			{
-				var quantityRandom = new Random().Next(0, countProducts);
 				var productName = $"Product {i}";
 				modelBuilder.Entity<Product>().HasData(new Product(i, productName));
 			}

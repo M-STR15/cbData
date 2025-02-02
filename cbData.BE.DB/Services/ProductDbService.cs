@@ -32,9 +32,8 @@ namespace cbData.BE.DB.Services
 					return null;
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				var test = ex.ToString();
 				return null;
 			}
 		}
@@ -57,9 +56,8 @@ namespace cbData.BE.DB.Services
 					return null;
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				var test = ex;
 				return null;
 			}
 		}

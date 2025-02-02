@@ -37,7 +37,6 @@ namespace cbData.Shared.Models
 				sb.Append($"{property.Name}");
 				sb.Append("} ");
 			}
-			var result = sb.ToString();
 			return sb.ToString();
 		}
 	}

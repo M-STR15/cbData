@@ -18,17 +18,16 @@ namespace cbData.BE.DB.Services
 		{
 			try
 			{
-				using (var db = await _contextFactory.CreateDbContextAsync())
-				{
-					db.ChangeTracker.Clear();
+				var db = await _contextFactory.CreateDbContextAsync();
 
-					var result = await db.Orders
-					.GroupBy(o => o.Product)
-					.Select(g => new { Product = g.Key, TotalOrders = g.Sum(o => o.Quantity) })
-					.ToListAsync();
+				db.ChangeTracker.Clear();
 
-					return result.Select(x => new TotalOrdersByProduct(x.Product, x.TotalOrders)).ToList();
-				}
+				var result = await db.Orders
+				.GroupBy(o => o.Product)
+				.Select(g => new { Product = g.Key, TotalOrders = g.Sum(o => o.Quantity) })
+				.ToListAsync();
+
+				return result.Select(x => new TotalOrdersByProduct(x.Product, x.TotalOrders)).ToList();
 			}
 			catch (Exception ex)
 			{

@@ -23,7 +23,6 @@ namespace cbData.Shared.Services
 			_version = BuildInfo.VersionStr;
 
 			var format = new CustomLogEvent().GetFormat();
-			var test = Directory.GetCurrentDirectory();
 
 			Log.Logger = new LoggerConfiguration()
 			  .WriteTo.File(
@@ -63,8 +62,6 @@ namespace cbData.Shared.Services
 			string timestamp = parts[0];  // Spojíme datum a čas
 			string level = parts[1].Trim('[', ']');  // Vyčistíme log level
 			string message = parts[2];  // Zbytek je zpráva
-
-			//Console.WriteLine($"Timestamp: {timestamp}, Level: {level}, Message: {message}");
 
 			return message;
 		}
