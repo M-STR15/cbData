@@ -1,4 +1,6 @@
-﻿using cbData.BE.BusinessLogic.Controllers;
+﻿#pragma warning disable IDE0058
+
+using cbData.BE.BusinessLogic.Controllers;
 using cbData.BE.DB.Services;
 using Microsoft.Extensions.DependencyInjection;
 

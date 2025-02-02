@@ -75,7 +75,7 @@ namespace cbData.Shared.Services
 		public List<CustomLogEvent> ReadEventLogs()
 		{
 			var events = new List<CustomLogEvent>();
-			string logFilePath = $"{Path}\\{_assemblyName}{DateTime.Now.ToString("yyyyMMdd")}.log";
+			string logFilePath = $"{Path}\\{_assemblyName}{DateTime.Now:yyyyMMdd}.log";
 
 			using (FileStream fs = new FileStream(logFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 			using (StreamReader sr = new StreamReader(fs))

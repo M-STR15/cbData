@@ -1,8 +1,8 @@
-﻿using cbData.BE.BusinessLogic.Models.Products;
+﻿using cbData.BE.DB.Models.Products;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace cbData.BE.DB.Models.Products
+namespace cbData.BE.BusinessLogic.Models.Products
 {
 	public class OrderApi : IOrderApiBase
 	{

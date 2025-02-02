@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿#pragma warning disable IDE0058
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace cbData.BE.DB.Services
 {

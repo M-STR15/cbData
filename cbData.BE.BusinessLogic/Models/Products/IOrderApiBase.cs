@@ -1,4 +1,6 @@
-﻿namespace cbData.BE.DB.Models.Products
+﻿using cbData.BE.DB.Models.Products;
+
+namespace cbData.BE.BusinessLogic.Models.Products
 {
 	public interface IOrderApiBase
 	{

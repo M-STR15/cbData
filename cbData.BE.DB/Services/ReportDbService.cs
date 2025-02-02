@@ -1,18 +1,13 @@
-﻿using cbData.BE.BusinessLogic.Models.Reports;
-using cbData.BE.DB.DataContext;
+﻿using cbData.BE.DB.DataContext;
+using cbData.BE.DB.Models.Reports;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace cbData.BE.DB.Services
 {
-	public class ReportDbService
+	public class ReportDbService(IDbContextFactory<CbDataDbContext> contextFactory)
 	{
-		private readonly IDbContextFactory<CbDataDbContext> _contextFactory;
-
-		public ReportDbService(IDbContextFactory<CbDataDbContext> contextFactory)
-		{
-			_contextFactory = contextFactory;
-		}
+		private readonly IDbContextFactory<CbDataDbContext> _contextFactory = contextFactory;
 
 		public async Task<List<TotalOrdersByProduct>?> GetTotalOrdersByProductAsync()
 		{

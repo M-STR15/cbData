@@ -1,18 +1,15 @@
-﻿using cbData.BE.DB.DataContext;
+﻿#pragma warning disable IDE0058
+
+using cbData.BE.DB.DataContext;
 using cbData.BE.DB.Models.Products;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace cbData.BE.DB.Services
 {
-	public class ProductDbService 
+	public class ProductDbService(IDbContextFactory<CbDataDbContext> contextFactory)
 	{
-		private readonly IDbContextFactory<CbDataDbContext> _contextFactory;
-
-		public ProductDbService(IDbContextFactory<CbDataDbContext> contextFactory)
-		{
-			_contextFactory = contextFactory;
-		}
+		private readonly IDbContextFactory<CbDataDbContext> _contextFactory = contextFactory;
 
 		public async Task<IOrder?> AddOrderAsync(IOrder order)
 		{

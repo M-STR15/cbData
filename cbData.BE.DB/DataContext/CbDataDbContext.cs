@@ -1,16 +1,13 @@
-﻿using cbData.BE.DB.Models.Products;
+﻿#pragma warning disable IDE0058
+using cbData.BE.DB.Models.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace cbData.BE.DB.DataContext
 {
-	public class CbDataDbContext : DbContext
+	public class CbDataDbContext(DbContextOptions<CbDataDbContext> options) : DbContext(options)
 	{
 		public virtual DbSet<Order> Orders { get; set; }
 		public virtual DbSet<Product> Products { get; set; }
-
-		public CbDataDbContext(DbContextOptions<CbDataDbContext> options) : base(options)
-		{
-		}
 
 		public CbDataDbContext CreateDbContext(string[] args)
 		{

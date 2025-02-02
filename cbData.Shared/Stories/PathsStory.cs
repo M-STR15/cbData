@@ -1,4 +1,6 @@
-﻿namespace cbData.Shared.Stories
+﻿#pragma warning disable CA1822
+
+namespace cbData.Shared.Stories
 {
 	public class PathsStory
 	{

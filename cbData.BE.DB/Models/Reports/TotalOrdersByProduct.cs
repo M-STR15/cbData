@@ -1,6 +1,6 @@
 ﻿using cbData.BE.DB.Models.Products;
 
-namespace cbData.BE.BusinessLogic.Models.Reports
+namespace cbData.BE.DB.Models.Reports
 {
 	public class TotalOrdersByProduct
 	{
