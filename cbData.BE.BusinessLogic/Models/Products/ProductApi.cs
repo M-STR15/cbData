@@ -1,5 +1,5 @@
 ﻿using cbData.BE.DB.Models.Products;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace cbData.BE.BusinessLogic.Models.Products
 {
@@ -24,7 +24,7 @@ namespace cbData.BE.BusinessLogic.Models.Products
 		public string? Description { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
-		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public ICollection<OrderApi>? Orders { get; set; }
 
 		public Product ToProduct()

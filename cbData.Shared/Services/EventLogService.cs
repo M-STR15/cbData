@@ -2,7 +2,7 @@
 using cbData.Shared.Stories;
 using Serilog;
 using Serilog.Events;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace cbData.Shared.Services
 {
@@ -70,7 +70,8 @@ namespace cbData.Shared.Services
 
 		private void writeEvent(CustomLogEvent customLogEvent)
 		{
-			Log.Write(customLogEvent.Level, JsonSerializer.Serialize(customLogEvent));
+			var jsonString = JsonConvert.SerializeObject(customLogEvent);
+			Log.Write(customLogEvent.Level, jsonString);
 		}
 
 		/// Metoda pro čtení logovacích záznamů z logovacího souboru.
@@ -92,7 +93,7 @@ namespace cbData.Shared.Services
 				{
 					var message = ParseLogEntry(line);
 					if (message != null && message != "")
-						events.Add(JsonSerializer.Deserialize<CustomLogEvent>(message));
+						events.Add(JsonConvert.DeserializeObject<CustomLogEvent>(message));
 				}
 			}
 

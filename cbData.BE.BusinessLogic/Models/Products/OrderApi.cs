@@ -1,6 +1,6 @@
 ﻿using cbData.BE.BusinessLogic.Models.Products;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace cbData.BE.DB.Models.Products
 {
@@ -20,7 +20,7 @@ namespace cbData.BE.DB.Models.Products
 
 		public int Id { get; set; }
 
-		[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public ProductApi? Product { get; set; }
 
 		[Key]

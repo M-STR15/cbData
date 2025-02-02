@@ -141,7 +141,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderApi">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders")]
-		public async Task<IActionResult> AddOrderAsync([FromBody] IOrderApiBase orderApi)
+		public async Task<IActionResult> AddOrderAsync([FromBody] OrderApi orderApi)
 		{
 			try
 			{
@@ -182,7 +182,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderApi">Objednávka k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/orders")]
-		public async Task<IActionResult> UpdateOrderAsync([FromBody] IOrderApiBase orderApi)
+		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderApi orderApi)
 		{
 			try
 			{
