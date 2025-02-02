@@ -14,7 +14,7 @@
 	</PropertyGroup>
 
 	<Target Name="ShowProjectDirectory" BeforeTargets="Build">
-		<Message Text="Project Directory: $(MSBuildProjectDirectory)" Importance="high"/>
+		<Message Text="Project Directory: $(MSBuildProjectDirectory)" Importance="high" />
 	</Target>
 	
 	<ItemGroup>
@@ -30,6 +30,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.2.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.2.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />
