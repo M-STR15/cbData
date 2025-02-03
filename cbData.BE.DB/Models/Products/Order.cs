@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cbData.BE.DB.Models.Products
 {
 	[Table("Orders", Schema = "Products")]
+	[Index(nameof(ProductId),Name ="PK")]
 	public class Order : Stamp, IOrder
 	{
 		[Key]

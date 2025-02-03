@@ -3,3 +3,5 @@ add-migration InitialMigration -Project cbData.BE.DB -startupproject cbData -Out
 remove-migration
 update-Database -StartupProject cbData -Project cbData.BE.DB
 update-Database -StartupProject cbData -Project cbData.BE.DB -Migration Migrations
+
+drop-database -Project cbData.BE.DB -StartupProject cbData
