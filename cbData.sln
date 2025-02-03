@@ -24,8 +24,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{5F3E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Documents", "_Documents", "{3B763F68-4ED6-4F26-A148-3D92AB8D495A}"
 	ProjectSection(SolutionItems) = preProject
-		cb_data_white.png = cb_data_white.png
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{DCF51C30-8BD1-4DC3-AA9F-43A1EBD5FAC3}"
+	ProjectSection(SolutionItems) = preProject
+		cb_data_white.png = cb_data_white.png
+		logo_cbdata_cmyk_invert.png = logo_cbdata_cmyk_invert.png
+		logo_cbdata_cmyk_invert.svg = logo_cbdata_cmyk_invert.svg
 	EndProjectSection
 EndProject
 Global

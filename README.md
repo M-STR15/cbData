@@ -1,5 +1,5 @@
 
-![logo](cb_data_white.png)
+![logo](logo_cbdata_cmyk_invert.png)
 # cbData
 
 Tento projekt vzniknul za účelem prezentace zkušeností.
