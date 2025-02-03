@@ -23,7 +23,7 @@ Tento projekt vzniknul za účelem prezentace zkušeností.
 
 
 ## Installation
-1.úprava connectstringů v souboru appsettings.json
+1. Je potřeba prnvě upravit connectstringy v souboru "appsettings.json"
 
 - umístění souboru "cbData.appsettings.json"
     - cbDataDB: připojení na databázi v RELEASE

@@ -16,9 +16,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{10A91F4C-F6E1-4B74-B0FF-DB86D9D6AFDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BE", "BE", "{B4899AE6-7080-4D71-9914-193EA753A424}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{5F3E80E7-C23E-44B9-ACDC-B2FD04BD3FB4}"
 	ProjectSection(SolutionItems) = preProject
