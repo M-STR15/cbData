@@ -1,5 +1,6 @@
 
-# cdData
+![logo](cb_data_white.png)
+# cbData
 
 Tento projekt vzniknul za účelem prezentace zkušeností.
 
@@ -15,16 +16,49 @@ Tento projekt vzniknul za účelem prezentace zkušeností.
 
 ## Features
 
-- zobrazovač RESt api
 - Zobrazení rozcestníku
+- zobrazovač REST API
+- ukládání dat do bufferu/JSON
+- zobrazení EventLogu
 
 
 ## Installation
+1.úprava connectstringů v souboru appsettings.json
+
+- umístění souboru "cbData.appsettings.json"
+    - cbDataDB: připojení na databázi v RELEASE
+    - cbDataDB-local: připojení na databázi v DEBUG
+
+```bash
+ {
+	"Logging": {
+		"LogLevel": {
+			"Default": "Information",
+			"Microsoft.AspNetCore": "Warning"
+		}
+	},
+	"ConnectionStrings": {
+		"cbDataDb": "server=<nameDBserver>; database=cbData;Trusted_Connection=True;TrustServerCertificate=True;",
+		"cbDataDb-local": "server=<nameDBserver>; database=cbData;Trusted_Connection=True;TrustServerCertificate=True;"
+	},
+	"AllowedHosts": "*"
+}
+}
+```
+
+2.Spustit příkaz v Package Manager Console
+
+```bash
+  update-Database -StartupProject cbData -Project cbData.BE.DB
+```
+
+3. Spustit aplikaci
+
 
     
 ## Release
 
-### 0.0.0   (2025-01-XX)
+### 1.0.0   (2025-02-03)
 
 Uvolněné základní funkcionality
 
