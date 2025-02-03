@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BE", "BE", "{B4899AE6-7080-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{5F3E80E7-C23E-44B9-ACDC-B2FD04BD3FB4}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Pracovní složka\Desktop\cbData\cbDataTest.postman_collection.json = ..\..\Pracovní složka\Desktop\cbData\cbDataTest.postman_collection.json
+		Postman\cbDataTest.postman_collection.json = Postman\cbDataTest.postman_collection.json
 	EndProjectSection
 EndProject
 Global
