@@ -4,6 +4,16 @@
 
 Tento projekt vzniknul za účelem prezentace zkušeností.
 
+## Description
+
+- Project je napsaný v .net core 8.0
+- Databáze je vytvořena v MS SQL
+- Využívá se Entity Framework Core
+- Dokumentace je ve SWAGGERu
+- Testy jsou napsány v:
+    - xUnit
+	- Postman
+
 ## Authors
 
 - [@M-STR](https://github.com/M-STR15)
