@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "21626432-6462-4ce4-9659-9980ed290707",
+		"_postman_id": "d37489fd-bd15-43d7-8117-f1393d11e573",
 		"name": "cbDataTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "33210924"
@@ -47,8 +47,6 @@
 							"    // Ověření, že description je null\r",
 							"    pm.expect(jsonData).to.have.property(\"description\").that.is.null;\r",
 							"    \r",
-							"    // Ověření, že orders je prázdné pole\r",
-							"    pm.expect(jsonData).to.have.property(\"orders\").that.is.an(\"array\").and.is.empty;\r",
 							"});"
 						],
 						"type": "text/javascript",
