@@ -162,7 +162,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		}
 
 		/// <summary>
-		/// Přidá novou objednávku
+		/// Přidá novou objednávku. U totoho API zpětného zaslání request objektu, jelikož toto api jenom přímá data a zpracováváje až později. 
 		/// </summary>
 		/// <param name="orderApi">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
@@ -176,7 +176,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 			catch (Exception ex)
 			{
-				_eventLogService.WriteError(Guid.Parse("1004f45c-0861-4dc0-8083-757fe0207019"), ex.Message);
+				_eventLogService.WriteError(Guid.Parse("cc9c768e-e7bf-4ced-9135-c6c0a98b42f6"), ex.Message);
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
