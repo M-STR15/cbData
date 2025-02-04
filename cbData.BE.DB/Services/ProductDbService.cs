@@ -18,11 +18,10 @@ namespace cbData.BE.DB.Services
 				{
 					order.UpdateUtcDateTime = DateTime.UtcNow;
 
-					using var db = await _contextFactory.CreateDbContextAsync();
+					var db = await _contextFactory.CreateDbContextAsync();
 
 					await db.AddAsync(order);
 					await db.SaveChangesAsync();
-
 
 					return order;
 				}

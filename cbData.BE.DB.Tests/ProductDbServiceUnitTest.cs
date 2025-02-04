@@ -76,26 +76,26 @@ namespace cbData.BE.DB.Tests.Services
 		public async Task AddOrderTestAsync()
 		{
 			await using var context = await createContextAsync();
+			resetDB(context);
 
 			var product = new Product { Name = "Test Product", Description = "Test Description" };
 			var productDb = await _service.AddProductAsync(product);
 			Assert.NotNull(productDb);
 			var order = new Order(productDb.Id, Random.Shared.Next());
 
-			resetDB(context);
-
 			var result = await _service.AddOrderAsync(order);
 			var resultDb = await _service.GetOrderAsync(order.Id);
-
+		
 			Assert.NotNull(result);
 			Assert.NotNull(resultDb);
 
-			testAllProperties<Order>(result, resultDb);
+			var ignoredProperties = new HashSet<string> { nameof(Order.Product) };
+			testAllProperties<Order>(result, resultDb, ignoredProperties);
 		}
 
 		private void testAllProperties<T>(T expectedObj, T actualObj, HashSet<string>? ignoredProperties = null)
 		{
-			foreach (var prop in typeof(Product).GetProperties())
+			foreach (var prop in typeof(T).GetProperties())
 			{
 				if (ignoredProperties != null && ignoredProperties.Contains(prop.Name)) continue;
 

@@ -4,6 +4,7 @@ using cbData.BE.DB.Models.Products;
 using cbData.BE.DB.Services;
 using cbData.Shared.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -36,7 +37,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 				if (order != null)
 				{
 					var orderConvert = firstLevelOrder(order);
-					return Ok(orderConvert);
+					return order != null ? Ok(orderConvert) : NotFound();
 				}
 				else
 				{
@@ -62,7 +63,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			{
 				var orders = await _productDbService.GetOrdersAsync();
 				var model = orders?.Select(x => firstLevelOrder(x)).ToList();
-				return Ok(model);
+				return model != null ? Ok(model) : NotFound(); ;
 			}
 			catch (Exception ex)
 			{
@@ -152,7 +153,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			try
 			{
 				var order = await _productDbService.AddOrderAsync(orderApi.ToOrder());
-				return Ok(order);
+				return order == null ? BadRequest() : Ok(order);
 			}
 			catch (Exception ex)
 			{
@@ -172,7 +173,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			try
 			{
 				await _requestBufferServic.AddOrderAsync(orderApi.ToOrder());
-				return Ok();
+				return NoContent();
 			}
 			catch (Exception ex)
 			{
@@ -193,7 +194,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			try
 			{
 				var product = await _productDbService.AddProductAsync(productApi.ToProduct());
-				return Ok(product);
+				return product == null ? BadRequest() : Ok(product);
 			}
 			catch (Exception ex)
 			{
@@ -216,8 +217,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 		{
 			try
 			{
-				var orders = await _productDbService.UpdateOrder(orderApi.ToOrder());
-				return Ok(orders);
+				var order = await _productDbService.UpdateOrder(orderApi.ToOrder());
+				return order == null ? BadRequest() : Ok(order);
 			}
 			catch (Exception ex)
 			{
@@ -237,7 +238,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 			try
 			{
 				var product = await _productDbService.UpdateProduct(productApi.ToProduct());
-				return Ok(product);
+				return product == null ? BadRequest() : Ok(product);
 			}
 			catch (Exception ex)
 			{
@@ -260,8 +261,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 		{
 			try
 			{
-				var orders = await _productDbService.DeleteOrderAsync(orderId);
-				return NoContent();
+				var result = await _productDbService.DeleteOrderAsync(orderId);
+				return result ? NoContent() : BadRequest();
 			}
 			catch (Exception ex)
 			{
@@ -280,8 +281,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 		{
 			try
 			{
-				var product = await _productDbService.DeleteProductAsync(productId);
-				return NoContent();
+				var result = await _productDbService.DeleteProductAsync(productId);
+				return result ? NoContent() : BadRequest();
 			}
 			catch (Exception ex)
 			{
