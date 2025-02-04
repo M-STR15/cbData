@@ -13,8 +13,8 @@
 }
 
 svg path {
-	stroke: #162f73; /* Barva čáry */
-	stroke-width: 2; /* Tloušťka čáry */
+	stroke: #130f42; /* Barva čáry */
+	stroke-width: 10; /* Tloušťka čáry */
 	fill: none; /* Bez výplně */
 	stroke-dasharray: 100%; /* Délka čáry */
 	stroke-dashoffset: 0; /* Počáteční pozice */
@@ -22,31 +22,31 @@ svg path {
 }
 
 	svg path:nth-child(1) {
-		stroke-width: 2; /* Tloušťka čáry */
-		stroke: #ed1b2f; /* Barva čáry */
+		stroke-width: 10; /* Tloušťka čáry */
+		stroke: #ee7d18; /* Barva čáry */
 	}
 
 	svg path:nth-child(2) {
-		stroke-width: 2; /* Tloušťka čáry */
-		stroke: #ed1b2f; /* Barva čáry */
+		stroke-width: 10; /* Tloušťka čáry */
+		stroke: #ee7d18; /* Barva čáry */
 	}
 
 	svg path:nth-child(3) {
-		stroke-width: 1; /* Tloušťka čáry */
-		stroke: #162f73; /* Barva čáry */
+		stroke-width: 10; /* Tloušťka čáry */
+		stroke: #130f42; /* Barva čáry */
 	}
 
 	svg path:nth-child(4) {
-		stroke-width: 1; /* Tloušťka čáry */
-		stroke: #162f73; /* Barva čáry */
+		stroke-width: 10; /* Tloušťka čáry */
+		stroke: #130f42; /* Barva čáry */
 	}
 
 	svg path:nth-child(5) {
-		stroke-width: 1; /* Tloušťka čáry */
-		stroke: #162f73; /* Barva čáry */
+		stroke-width: 10; /* Tloušťka čáry */
+		stroke: #130f42; /* Barva čáry */
 	}
 
 	svg path:nth-child(6) {
-		stroke-width: 1; /* Tloušťka čáry */
-		stroke: #162f73; /* Barva čáry */
+		stroke-width: 10; /* Tloušťka čáry */
+		stroke: #130f42; /* Barva čáry */
 	}
