@@ -11,7 +11,7 @@ namespace cbData.BE.BusinessLogic.Services
 		public static IServiceCollection AddCbDataBeBusinessLogicService(this IServiceCollection services)
 		{
 			services.AddCbDataBeDbServices();
-			services.AddScoped<ProductController>();
+			services.AddSingleton	<ProductController>();
 
 			return services;
 		}

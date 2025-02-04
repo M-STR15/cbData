@@ -31,7 +31,7 @@ builder.Services.AddHttpClient("ApiClient", (sp, client) =>
 	client.BaseAddress = new Uri(baseAddress);
 });
 
-builder.Services.AddDbContextFactory<CbDataDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+builder.Services.AddDbContextFactory<CbDataDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
 
 builder.Services.AddSingleton<PathsStory>();
 builder.Services.AddSingleton<IEventLogService, EventLogService>();
@@ -39,6 +39,8 @@ builder.Services.AddCbDataBeBusinessLogicService();
 
 builder.Services.AddSingleton<CJsonService>();
 builder.Services.AddSingleton<ProductStory>();
+
+builder.Services.AddSingleton<RequestBufferService>();
 
 builder.Services.AddControllers();
 //.AddApplicationPart(typeof(ProductController).Assembly);

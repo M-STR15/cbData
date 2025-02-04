@@ -8,7 +8,7 @@ namespace cbData.BE.DB.Services
 	{
 		public static IServiceCollection AddCbDataBeDbServices(this IServiceCollection services)
 		{
-			services.AddScoped<ProductDbService>();
+			services.AddSingleton<ProductDbService>();
 			services.AddScoped<ReportDbService>();
 			return services;
 		}

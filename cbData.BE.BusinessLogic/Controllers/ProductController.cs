@@ -1,10 +1,12 @@
 ﻿using cbData.BE.BusinessLogic.Models.Products;
+using cbData.BE.BusinessLogic.Services;
 using cbData.BE.DB.Models.Products;
 using cbData.BE.DB.Services;
 using cbData.Shared.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+
 
 namespace cbData.BE.BusinessLogic.Controllers
 {
@@ -13,10 +15,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(200, "Úspěšné získání položky/položek [Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)")]
 	[SwaggerResponse(404, "Položka/Položky nenalezeny.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)")]
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
-	public class ProductController(ProductDbService productDbService, IEventLogService eventLogService) : ControllerBase
+	public class ProductController(ProductDbService productDbService, IEventLogService eventLogService, RequestBufferService requestBufferService) : ControllerBase
 	{
 		private readonly IEventLogService _eventLogService = eventLogService;
 		private readonly ProductDbService _productDbService = productDbService;
+		private readonly RequestBufferService _requestBufferServic = requestBufferService;
 		#region GET
 
 		/// <summary>
@@ -157,6 +160,27 @@ namespace cbData.BE.BusinessLogic.Controllers
 				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 			}
 		}
+
+		/// <summary>
+		/// Přidá novou objednávku
+		/// </summary>
+		/// <param name="orderApi">Objednávka k přidání</param>
+		/// <returns>HTTP odpověď</returns>
+		[HttpPost("api/v1/products/orders-without-answer")]
+		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderApi orderApi)
+		{
+			try
+			{
+				await _requestBufferServic.AddOrderAsync(orderApi.ToOrder());
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				_eventLogService.WriteError(Guid.Parse("1004f45c-0861-4dc0-8083-757fe0207019"), ex.Message);
+				return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+			}
+		}
+
 
 		/// <summary>
 		/// Přidá nový produkt

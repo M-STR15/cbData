@@ -16,10 +16,13 @@ namespace cbData.BE.DB.Services
 			{
 				if (_contextFactory != null)
 				{
-					var db = await _contextFactory.CreateDbContextAsync();
-					db.ChangeTracker.Clear();
+					order.UpdateUtcDateTime = DateTime.UtcNow;
+
+					using var db = await _contextFactory.CreateDbContextAsync();
+
 					await db.AddAsync(order);
 					await db.SaveChangesAsync();
+
 
 					return order;
 				}
@@ -28,7 +31,7 @@ namespace cbData.BE.DB.Services
 					return null;
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				return null;
 			}
