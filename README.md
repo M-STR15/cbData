@@ -56,11 +56,12 @@ Tento projekt vzniknul za účelem prezentace zkušeností.
 }
 ```
 
-2.Spustit příkaz v Package Manager Console
+2. Spustit příkaz v Package Manager Console
 
 ```bash
   update-Database -StartupProject cbData -Project cbData.BE.DB
 ```
+
 
 3. Spustit aplikaci
 
