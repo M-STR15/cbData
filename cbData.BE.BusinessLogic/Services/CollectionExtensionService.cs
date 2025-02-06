@@ -13,6 +13,7 @@ namespace cbData.BE.BusinessLogic.Services
 		{
 			services.AddCbDataBeDbServices();
 
+			services.AddMemoryCache();
 			services.AddAutoMapper(typeof(MappingProfile));
 
 			services.AddSingleton	<ProductController>();
