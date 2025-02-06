@@ -6,7 +6,7 @@ namespace cbData.BE.DB.Models.Products
 {
 	[Table("Products", Schema = "Products")]
 	[Index(nameof(Name), IsUnique = true)]
-	public class Product : IProduct, IProductBase
+	public class Product : IProductBase
 	{
 		public string? Description { get; set; }
 

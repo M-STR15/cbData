@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace cbData.BE.BusinessLogic.Models.Products
 {
-	public class OrderApi : IOrderApiBase
+	public class OrderDto 
 	{
 		public int Id { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-		public ProductApi? Product { get; set; }
+		public ProductDto? Product { get; set; }
 
 		[Key]
 		public int ProductId { get; set; }
@@ -18,10 +18,10 @@ namespace cbData.BE.BusinessLogic.Models.Products
 
 		public DateTime UpdateUtcDateTime { get; set; }
 
-		public OrderApi()
+		public OrderDto()
 		{ }
 
-		public OrderApi(Order order)
+		public OrderDto(Order order)
 		{
 			Id = order.Id;
 			ProductId = order.ProductId;
@@ -34,10 +34,10 @@ namespace cbData.BE.BusinessLogic.Models.Products
 			return new Order(Id, ProductId, Quantity, UpdateUtcDateTime);
 		}
 
-		private static ProductApi? convertProduct(Product? product)
+		private static ProductDto? convertProduct(Product? product)
 		{
 			if (product != null)
-				return new ProductApi(product?.Id ?? 0, product?.Name ?? "", product?.Description, null);
+				return new ProductDto(product?.Id ?? 0, product?.Name ?? "", product?.Description, null);
 			else
 				return null;
 		}

@@ -13,8 +13,8 @@
     <table>
         <thead>
             <tr>
-                <th style="width:200px;text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.Product)</th>
-                <th style="text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductApi.TotalOrders)</th>
+                <th style="width:200px;text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductDto.Product)</th>
+                <th style="text-align:left;text-decoration:underline;">@nameof(TotalOrdersByProductDto.TotalOrders)</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +37,6 @@ else
 }
 
 @code {
-    private List<TotalOrdersByProductApi>? _totalOrdersByProduct => ProductStory?.OrdersBuffer?.TotalOrdersByProduct;
+    private List<TotalOrdersByProductDto>? _totalOrdersByProduct => ProductStory?.OrdersBuffer?.TotalOrdersByProduct;
 
 }

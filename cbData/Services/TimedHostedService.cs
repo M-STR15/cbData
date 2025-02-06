@@ -53,7 +53,7 @@ namespace cbData.Services
 
 					if (result.IsSuccessStatusCode)
 					{
-						var resultData = await result.Content.ReadFromJsonAsync<List<TotalOrdersByProductApi>>();
+						var resultData = await result.Content.ReadFromJsonAsync<List<TotalOrdersByProductDto>>();
 						if (_productStory != null && resultData != null && _productStory.OrdersBuffer != null)
 						{
 							_productStory.OrdersBuffer.LastUpdate = DateTime.UtcNow;

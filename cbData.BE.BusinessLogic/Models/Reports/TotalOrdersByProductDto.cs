@@ -2,15 +2,15 @@
 
 namespace cbData.BE.BusinessLogic.Models.Reports
 {
-	public class TotalOrdersByProductApi
+	public class TotalOrdersByProductDto
 	{
-		public ProductApi? Product { get; set; }
+		public ProductDto? Product { get; set; }
 		public int TotalOrders { get; set; }
 
-		public TotalOrdersByProductApi()
+		public TotalOrdersByProductDto()
 		{ }
 
-		public TotalOrdersByProductApi(ProductApi product, int totalOrders)
+		public TotalOrdersByProductDto(ProductDto product, int totalOrders)
 		{
 			Product = product;
 			TotalOrders = totalOrders;

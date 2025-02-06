@@ -105,15 +105,15 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// </summary>
 		/// <param name="order">Entita Order</param>
 		/// <returns>Instance OrderApi</returns>
-		private static OrderApi firstLevelOrder(Order order)
+		private static OrderDto firstLevelOrder(Order order)
 		{
-			return new OrderApi()
+			return new OrderDto()
 			{
 				Id = order.Id,
 				ProductId = order.ProductId,
 				Quantity = order.Quantity,
 				UpdateUtcDateTime = order.UpdateUtcDateTime,
-				Product = new ProductApi
+				Product = new ProductDto
 				{
 					Id = order?.Product?.Id ?? 0,
 					Name = order?.Product?.Name ?? "",
@@ -127,14 +127,14 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// </summary>
 		/// <param name="product">Entita Product</param>
 		/// <returns>Instance ProductApi</returns>
-		private static ProductApi firstLevelProduct(Product product)
+		private static ProductDto firstLevelProduct(Product product)
 		{
-			return new ProductApi()
+			return new ProductDto()
 			{
 				Id = product.Id,
 				Name = product.Name,
 				Description = product.Description,
-				Orders = product.Orders?.Select(x => new OrderApi(x)).ToList() ?? null
+				Orders = product.Orders?.Select(x => new OrderDto(x)).ToList() ?? null
 			};
 		}
 
@@ -148,7 +148,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderApi">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders")]
-		public async Task<IActionResult> AddOrderAsync([FromBody] OrderApi orderApi)
+		public async Task<IActionResult> AddOrderAsync([FromBody] OrderDto orderApi)
 		{
 			try
 			{
@@ -168,7 +168,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderApi">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders-without-answer")]
-		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderApi orderApi)
+		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderDto orderApi)
 		{
 			try
 			{
@@ -189,7 +189,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="productApi">Produkt k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products")]
-		public async Task<IActionResult> AddProductAsync([FromBody] ProductApi productApi)
+		public async Task<IActionResult> AddProductAsync([FromBody] ProductDto productApi)
 		{
 			try
 			{
@@ -213,7 +213,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderApi">Objednávka k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/orders")]
-		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderApi orderApi)
+		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderDto orderApi)
 		{
 			try
 			{
@@ -233,7 +233,7 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="productApi">Produkt k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/")]
-		public async Task<IActionResult> UpdateProductAsync([FromBody] ProductApi productApi)
+		public async Task<IActionResult> UpdateProductAsync([FromBody] ProductDto productApi)
 		{
 			try
 			{
