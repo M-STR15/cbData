@@ -1,4 +1,4 @@
-﻿using cbData.BE.BusinessLogic.Models.Products;
+﻿using AutoMapper;
 using cbData.BE.BusinessLogic.Models.Reports;
 using cbData.BE.DB.Services;
 using cbData.Shared.Services;
@@ -13,10 +13,11 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(200, "Úspěšné získání položky/položek [Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)")]
 	[SwaggerResponse(404, "Položka/Položky nenalezeny.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)")]
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
-	public class ReportController(ReportDbService reportDbService, IEventLogService eventLogService) : ControllerBase
+	public class ReportController(ReportDbService reportDbService, IEventLogService eventLogService, IMapper mapper) : ControllerBase
 	{
 		private readonly IEventLogService _eventLogService = eventLogService;
 		private readonly ReportDbService _reportDbService = reportDbService;
+		private readonly IMapper _mapper = mapper;
 		[HttpGet("api/v1/reports/total-order-by-product")]
 		public async Task<IActionResult> GetTotalOrdersByProductAsync()
 		{
@@ -25,9 +26,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 				var model = await _reportDbService.GetTotalOrdersByProductAsync();
 				if (model != null)
 				{
-					//var json= JsonConvert.SerializeObject(model);
-					var modelConvert = model.Select(x => new TotalOrdersByProductDto(new ProductDto(x?.Product), x?.TotalOrders ?? 0)).ToList();
-					return Ok(model);
+					var modelDto = _mapper.Map<List<TotalOrdersByProductDto>>(model);
+					return Ok(modelDto);
 				}
 				else
 				{

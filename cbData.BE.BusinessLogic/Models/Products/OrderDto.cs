@@ -1,22 +1,12 @@
 ﻿using cbData.BE.DB.Models.Products;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
 
 namespace cbData.BE.BusinessLogic.Models.Products
 {
-	public class OrderDto 
+	public class OrderDto : OrderBaseDto
 	{
-		public int Id { get; set; }
-
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-		public ProductDto? Product { get; set; }
-
-		[Key]
-		public int ProductId { get; set; }
-
-		public int Quantity { get; set; }
-
-		public DateTime UpdateUtcDateTime { get; set; }
+		public ProductBaseDto? Product { get; set; }
 
 		public OrderDto()
 		{ }
@@ -28,10 +18,6 @@ namespace cbData.BE.BusinessLogic.Models.Products
 			Quantity = order.Quantity;
 			UpdateUtcDateTime = order.UpdateUtcDateTime;
 			Product = convertProduct(order.Product);
-		}
-		public Order ToOrder()
-		{
-			return new Order(Id, ProductId, Quantity, UpdateUtcDateTime);
 		}
 
 		private static ProductDto? convertProduct(Product? product)

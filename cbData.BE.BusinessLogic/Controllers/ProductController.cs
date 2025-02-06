@@ -1,4 +1,5 @@
-﻿using cbData.BE.BusinessLogic.Models.Products;
+﻿using AutoMapper;
+using cbData.BE.BusinessLogic.Models.Products;
 using cbData.BE.BusinessLogic.Services;
 using cbData.BE.DB.Models.Products;
 using cbData.BE.DB.Services;
@@ -16,8 +17,9 @@ namespace cbData.BE.BusinessLogic.Controllers
 	[SwaggerResponse(200, "Úspěšné získání položky/položek [Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200)")]
 	[SwaggerResponse(404, "Položka/Položky nenalezeny.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)")]
 	[SwaggerResponse(500, "Chyba serveru.[Další informace](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500)")]
-	public class ProductController(ProductDbService productDbService, IEventLogService eventLogService, RequestBufferService requestBufferService) : ControllerBase
+	public class ProductController(ProductDbService productDbService, IEventLogService eventLogService, RequestBufferService requestBufferService, IMapper mapper) : ControllerBase
 	{
+		private readonly IMapper _mapper = mapper;
 		private readonly IEventLogService _eventLogService = eventLogService;
 		private readonly ProductDbService _productDbService = productDbService;
 		private readonly RequestBufferService _requestBufferServic = requestBufferService;
@@ -36,8 +38,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 				var order = await _productDbService.GetOrderAsync(orderId);
 				if (order != null)
 				{
-					var orderConvert = firstLevelOrder(order);
-					return order != null ? Ok(orderConvert) : NotFound();
+					var orderDto = _mapper.Map<OrderDto>(order);
+					return order != null ? Ok(orderDto) : NotFound();
 				}
 				else
 				{
@@ -62,8 +64,16 @@ namespace cbData.BE.BusinessLogic.Controllers
 			try
 			{
 				var orders = await _productDbService.GetOrdersAsync();
-				var model = orders?.Select(x => firstLevelOrder(x)).ToList();
-				return model != null ? Ok(model) : NotFound(); ;
+				//var model = orders?.Select(x => firstLevelOrder(x)).ToList();
+				if (orders != null)
+				{
+					var ordersDto = _mapper.Map<List<OrderDto>>(orders);
+					return Ok(ordersDto);
+				}
+				else
+				{
+					return NotFound();
+				}
 			}
 			catch (Exception ex)
 			{
@@ -85,8 +95,8 @@ namespace cbData.BE.BusinessLogic.Controllers
 				var product = await _productDbService.GetProductAsync(productId);
 				if (product != null)
 				{
-					var productConvert = firstLevelProduct(product);
-					return Ok(productConvert);
+					var productDto = _mapper.Map<ProductDto>(product);
+					return Ok(productDto);
 				}
 				else
 				{
@@ -100,44 +110,6 @@ namespace cbData.BE.BusinessLogic.Controllers
 			}
 		}
 
-		/// <summary>
-		/// Převádí entitu Order na OrderApi
-		/// </summary>
-		/// <param name="order">Entita Order</param>
-		/// <returns>Instance OrderApi</returns>
-		private static OrderDto firstLevelOrder(Order order)
-		{
-			return new OrderDto()
-			{
-				Id = order.Id,
-				ProductId = order.ProductId,
-				Quantity = order.Quantity,
-				UpdateUtcDateTime = order.UpdateUtcDateTime,
-				Product = new ProductDto
-				{
-					Id = order?.Product?.Id ?? 0,
-					Name = order?.Product?.Name ?? "",
-					Description = order?.Product?.Description
-				},
-			};
-		}
-
-		/// <summary>
-		/// Převádí entitu Product na ProductApi
-		/// </summary>
-		/// <param name="product">Entita Product</param>
-		/// <returns>Instance ProductApi</returns>
-		private static ProductDto firstLevelProduct(Product product)
-		{
-			return new ProductDto()
-			{
-				Id = product.Id,
-				Name = product.Name,
-				Description = product.Description,
-				Orders = product.Orders?.Select(x => new OrderDto(x)).ToList() ?? null
-			};
-		}
-
 		#endregion GET
 
 		#region POST
@@ -145,15 +117,17 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <summary>
 		/// Přidá novou objednávku
 		/// </summary>
-		/// <param name="orderApi">Objednávka k přidání</param>
+		/// <param name="orderDto">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders")]
-		public async Task<IActionResult> AddOrderAsync([FromBody] OrderDto orderApi)
+		public async Task<IActionResult> AddOrderAsync([FromBody] OrderDto orderDto)
 		{
 			try
 			{
-				var order = await _productDbService.AddOrderAsync(orderApi.ToOrder());
-				return order == null ? BadRequest() : Ok(order);
+				var order = _mapper.Map<Order>(orderDto);
+				order = await _productDbService.AddOrderAsync(order);
+				orderDto = _mapper.Map<OrderDto>(order);
+				return orderDto == null ? BadRequest() : Ok(orderDto);
 			}
 			catch (Exception ex)
 			{
@@ -165,14 +139,15 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <summary>
 		/// Přidá novou objednávku. U totoho API zpětného zaslání request objektu, jelikož toto api jenom přímá data a zpracováváje až později. 
 		/// </summary>
-		/// <param name="orderApi">Objednávka k přidání</param>
+		/// <param name="orderDto">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders-without-answer")]
-		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderDto orderApi)
+		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderDto orderDto)
 		{
 			try
 			{
-				await _requestBufferServic.AddOrderAsync(orderApi.ToOrder());
+				var order = _mapper.Map<Order>(orderDto);
+				await _requestBufferServic.AddOrderAsync(order);
 				return NoContent();
 			}
 			catch (Exception ex)
@@ -186,15 +161,17 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <summary>
 		/// Přidá nový produkt
 		/// </summary>
-		/// <param name="productApi">Produkt k přidání</param>
+		/// <param name="productDto">Produkt k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products")]
-		public async Task<IActionResult> AddProductAsync([FromBody] ProductDto productApi)
+		public async Task<IActionResult> AddProductAsync([FromBody] ProductDto productDto)
 		{
 			try
 			{
-				var product = await _productDbService.AddProductAsync(productApi.ToProduct());
-				return product == null ? BadRequest() : Ok(product);
+				var product = _mapper.Map<Product>(productDto);
+				product = await _productDbService.AddProductAsync(product);
+				productDto = _mapper.Map<ProductDto>(product);
+				return productDto == null ? BadRequest() : Ok(productDto);
 			}
 			catch (Exception ex)
 			{
@@ -210,15 +187,17 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <summary>
 		/// Aktualizuje objednávku
 		/// </summary>
-		/// <param name="orderApi">Objednávka k aktualizaci</param>
+		/// <param name="orderDto">Objednávka k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/orders")]
-		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderDto orderApi)
+		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderDto orderDto)
 		{
 			try
 			{
-				var order = await _productDbService.UpdateOrder(orderApi.ToOrder());
-				return order == null ? BadRequest() : Ok(order);
+				var order = _mapper.Map<Order>(orderDto);
+				order = await _productDbService.UpdateOrder(order);
+				orderDto = _mapper.Map<OrderDto>(order);
+				return orderDto == null ? BadRequest() : Ok(orderDto);
 			}
 			catch (Exception ex)
 			{
@@ -230,15 +209,17 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <summary>
 		/// Aktualizuje produkt
 		/// </summary>
-		/// <param name="productApi">Produkt k aktualizaci</param>
+		/// <param name="productDto">Produkt k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/")]
-		public async Task<IActionResult> UpdateProductAsync([FromBody] ProductDto productApi)
+		public async Task<IActionResult> UpdateProductAsync([FromBody] ProductDto productDto)
 		{
 			try
 			{
-				var product = await _productDbService.UpdateProduct(productApi.ToProduct());
-				return product == null ? BadRequest() : Ok(product);
+				var product = _mapper.Map<Product>(productDto);
+				product = await _productDbService.UpdateProduct(product);
+				productDto = _mapper.Map<ProductDto>(product);
+				return productDto == null ? BadRequest() : Ok(productDto);
 			}
 			catch (Exception ex)
 			{

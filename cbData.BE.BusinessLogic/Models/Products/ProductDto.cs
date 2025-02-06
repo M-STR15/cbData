@@ -3,21 +3,15 @@ using Newtonsoft.Json;
 
 namespace cbData.BE.BusinessLogic.Models.Products
 {
-	public class ProductDto : IProductBase
+	public class ProductDto : ProductBaseDto, IProductBase
 	{
-		public string? Description { get; set; }
-
-		public int Id { get; set; }
-
-		public string Name { get; set; } = string.Empty;
-
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-		public ICollection<OrderDto>? Orders { get; set; }
+		public ICollection<OrderBaseDto>? Orders { get; set; }
 
 		public ProductDto()
 		{ }
 
-		public ProductDto(int id, string name, string? description, ICollection<OrderDto>? orders = null)
+		public ProductDto(int id, string name, string? description, ICollection<OrderBaseDto>? orders = null)
 		{
 			Description = description;
 			Id = id;
@@ -27,11 +21,7 @@ namespace cbData.BE.BusinessLogic.Models.Products
 
 		public ProductDto(Product? product) : this(product?.Id ?? 0, product?.Name ?? "", product?.Description)
 		{
-			Orders = product?.Orders?.Select(x => new OrderDto(x))?.ToList();
-		}
-		public Product ToProduct()
-		{
-			return new Product(Id, Name, Description);
+			Orders = product?.Orders?.Select(x => new OrderBaseDto(x))?.ToList();
 		}
 	}
 }
