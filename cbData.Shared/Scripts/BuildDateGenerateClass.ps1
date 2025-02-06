@@ -20,7 +20,8 @@ namespace cbData.Shared.Models
 
         static BuildInfo()
         {
-            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            var assembly = System.Reflection.Assembly.Load(nameof(cbData));
+			var version = assembly.GetName().Version;
             if (version != null)
                 VersionStr = string.Format("v. {0}.{1}.{2} | b. {3}", version.Major, version.Minor, version.Build, BuildInfo.BuildDate.ToString("yyMMdd"));
         }

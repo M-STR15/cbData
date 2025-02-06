@@ -69,9 +69,25 @@ Tento projekt vzniknul za účelem prezentace zkušeností.
     
 ## Release
 
+Legenda:
+
+- 🚀 - Nová funkce
+- 🐞 - Oprava chyby
+- 📝 - Dokumentace
+- 🛠️ - Úprava kódu
+- 🚨 - Bezpečnostní aktualizace
+- ❌ - Odstranění funkce
+
+### 1.1.0   (2025-02-06)
+- 🛠️ - Přidán autoMapper
+- 🛠️ - Přidán cacheMemory 
+
 ### 1.0.0   (2025-02-03)
 
-Uvolněné základní funkcionality
+- 🚀 - Zobrazení rozcestníku
+- 🚀 - zobrazovač REST API
+- 🚀 - ukládání dat do bufferu/JSON
+- 🚀 - zobrazení 
 
 ## 🔗 Links
 [![portfolio](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/M-STR15/Shutdown-PC/)
