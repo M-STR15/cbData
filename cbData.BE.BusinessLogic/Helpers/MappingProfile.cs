@@ -16,10 +16,14 @@ namespace cbData.BE.BusinessLogic.Helpers
 				.EqualityComparison((entity, dto) => entity.Id == dto.Id);
 			CreateMap<Order, OrderBaseDto>().ReverseMap()
 				.EqualityComparison((entity, dto) => entity.Id == dto.Id);
+			CreateMap<Order, OrderAddBaseDto>().ReverseMap();
+
 			CreateMap<Product, ProductDto>().ReverseMap()
 				.EqualityComparison((entity, dto) => entity.Id == dto.Id);
 			CreateMap<Product, ProductBaseDto>().ReverseMap()
 				.EqualityComparison((entity, dto) => entity.Id == dto.Id);
+			CreateMap<Product, ProductAddBaseDto>().ReverseMap();
+
 			CreateMap<TotalOrdersByProduct, TotalOrdersByProductDto>().ReverseMap()
 				.EqualityComparison((entity, dto) => entity.Product.Id == dto.Product.Id);
 		}

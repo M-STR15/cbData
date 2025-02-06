@@ -119,14 +119,14 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderDto">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders")]
-		public async Task<IActionResult> AddOrderAsync([FromBody] OrderDto orderDto)
+		public async Task<IActionResult> AddOrderAsync([FromBody] OrderAddBaseDto orderAddBaseDto)
 		{
 			try
 			{
-				var order = _mapper.Map<Order>(orderDto);
+				var order = _mapper.Map<Order>(orderAddBaseDto);
 				order = await _productDbService.AddOrderAsync(order);
-				orderDto = _mapper.Map<OrderDto>(order);
-				return orderDto == null ? BadRequest() : Ok(orderDto);
+				orderAddBaseDto = _mapper.Map<OrderAddBaseDto>(order);
+				return orderAddBaseDto == null ? BadRequest() : Ok(orderAddBaseDto);
 			}
 			catch (Exception ex)
 			{
@@ -136,16 +136,16 @@ namespace cbData.BE.BusinessLogic.Controllers
 		}
 
 		/// <summary>
-		/// Přidá novou objednávku. U totoho API zpětného zaslání request objektu, jelikož toto api jenom přímá data a zpracováváje až později. 
+		/// Přidá novou objednávku. U totoho API zpětného zaslání request objektu, jelikož toto API jenom přjímá data a zpracováváje až později. 
 		/// </summary>
 		/// <param name="orderDto">Objednávka k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products/orders-without-answer")]
-		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderDto orderDto)
+		public async Task<IActionResult> AddOrderWithouttAnswerAsync([FromBody] OrderAddBaseDto orderAddBaseDto)
 		{
 			try
 			{
-				var order = _mapper.Map<Order>(orderDto);
+				var order = _mapper.Map<Order>(orderAddBaseDto);
 				await _requestBufferServic.AddOrderAsync(order);
 				return NoContent();
 			}
@@ -163,14 +163,14 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="productDto">Produkt k přidání</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPost("api/v1/products")]
-		public async Task<IActionResult> AddProductAsync([FromBody] ProductDto productDto)
+		public async Task<IActionResult> AddProductAsync([FromBody] ProductAddBaseDto productAddBaseDto)
 		{
 			try
 			{
-				var product = _mapper.Map<Product>(productDto);
+				var product = _mapper.Map<Product>(productAddBaseDto);
 				product = await _productDbService.AddProductAsync(product);
-				productDto = _mapper.Map<ProductDto>(product);
-				return productDto == null ? BadRequest() : Ok(productDto);
+				productAddBaseDto = _mapper.Map<ProductAddBaseDto>(product);
+				return productAddBaseDto == null ? BadRequest() : Ok(productAddBaseDto);
 			}
 			catch (Exception ex)
 			{
@@ -189,13 +189,13 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="orderDto">Objednávka k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/orders")]
-		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderDto orderDto)
+		public async Task<IActionResult> UpdateOrderAsync([FromBody] OrderBaseDto orderDto)
 		{
 			try
 			{
 				var order = _mapper.Map<Order>(orderDto);
 				order = await _productDbService.UpdateOrder(order);
-				orderDto = _mapper.Map<OrderDto>(order);
+				orderDto = _mapper.Map<OrderBaseDto>(order);
 				return orderDto == null ? BadRequest() : Ok(orderDto);
 			}
 			catch (Exception ex)
@@ -211,13 +211,13 @@ namespace cbData.BE.BusinessLogic.Controllers
 		/// <param name="productDto">Produkt k aktualizaci</param>
 		/// <returns>HTTP odpověď</returns>
 		[HttpPut("api/v1/products/")]
-		public async Task<IActionResult> UpdateProductAsync([FromBody] ProductDto productDto)
+		public async Task<IActionResult> UpdateProductAsync([FromBody] ProductBaseDto productDto)
 		{
 			try
 			{
 				var product = _mapper.Map<Product>(productDto);
 				product = await _productDbService.UpdateProduct(product);
-				productDto = _mapper.Map<ProductDto>(product);
+				productDto = _mapper.Map<ProductBaseDto>(product);
 				return productDto == null ? BadRequest() : Ok(productDto);
 			}
 			catch (Exception ex)
